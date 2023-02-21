@@ -27,7 +27,7 @@ function AdminLogin() {
             
             <br></br>
            
-            <button className="submit"  name="sign">Sign In</button>
+            <button className="submit"  name="sign">Log In</button>
             
             
             
