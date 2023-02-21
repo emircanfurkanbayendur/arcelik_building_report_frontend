@@ -1,0 +1,79 @@
+import React from 'react';
+import { Navbar, Nav } from 'rsuite';
+import HomeIcon from '@rsuite/icons/legacy/Home';
+import UserInfoIcon from '@rsuite/icons/UserInfo';
+import SearchIcon from '@rsuite/icons/Search';
+import SendIcon from '@rsuite/icons/Send';
+import ProjectIcon from '@rsuite/icons/Project';
+import MemberIcon from '@rsuite/icons/Member';
+import EmailIcon from '@rsuite/icons/Email';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+
+const linkStyle = {
+    textDecoration: 'none',
+    color: '#000',
+};
+
+const NavigationBar = ({ onSelect, activeKey, ...props }) => {
+    return (
+        <Container fluid>
+            <Row>
+                <Navbar {...props}>
+                    <Col>
+                        <Navbar.Brand href="/">
+                            <h6>Yapı Sorgulama Sistemi</h6>
+                        </Navbar.Brand>
+                    </Col>
+                    <Col className="d-none d-lg-block">
+                        <Nav onSelect={onSelect} activeKey={activeKey}>
+                            <Nav.Item eventKey="1" icon={<HomeIcon />}>
+                                <Link to="/" style={linkStyle}>
+                                    Anasayfa
+                                </Link>
+                            </Nav.Item>
+                            <Nav.Item eventKey="2" icon={<SearchIcon />}>
+                                <Link to="/" style={linkStyle}>
+                                    Yapı Durum Belgesi Sorgulama
+                                </Link>
+                            </Nav.Item>
+                            <Nav.Item eventKey="3" icon={<SendIcon />}>
+                                <Link to="/" style={linkStyle}>
+                                    Faydalı bağlantılar
+                                </Link>
+                            </Nav.Item>
+                            <Nav.Menu title="Hakkında" style={linkStyle}>
+                                <Nav.Item eventKey="4" icon={<ProjectIcon />}>
+                                    <Link to="/" style={linkStyle}>
+                                        Proje
+                                    </Link>
+                                </Nav.Item>
+                                <Nav.Item eventKey="5" icon={<MemberIcon />}>
+                                    <Link to="/" style={linkStyle}>
+                                        Takım
+                                    </Link>
+                                </Nav.Item>
+                                <Nav.Item eventKey="6" icon={<EmailIcon />}>
+                                    <Link to="/" style={linkStyle}>
+                                        İletişim
+                                    </Link>
+                                </Nav.Item>
+                            </Nav.Menu>
+                        </Nav>
+                    </Col>
+                    <Col>
+                        <Nav pullRight>
+                            <Nav.Item icon={<UserInfoIcon />}>
+                                <Link to="/auth" style={linkStyle}>
+                                    Kullanıcı Girişi
+                                </Link>
+                            </Nav.Item>
+                        </Nav>
+                    </Col>
+                </Navbar>
+            </Row>
+        </Container>
+    );
+};
+
+export default NavigationBar;
