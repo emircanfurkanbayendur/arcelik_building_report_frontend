@@ -44,17 +44,17 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                             </Nav.Item>
                             <Nav.Menu title="Hakkında" style={linkStyle}>
                                 <Nav.Item eventKey="4" icon={<ProjectIcon />}>
-                                    <Link to="/" style={linkStyle}>
+                                    <Link to="/project" style={linkStyle}>
                                         Proje
                                     </Link>
                                 </Nav.Item>
                                 <Nav.Item eventKey="5" icon={<MemberIcon />}>
-                                    <Link to="/" style={linkStyle}>
+                                    <Link to="/team" style={linkStyle}>
                                         Takım
                                     </Link>
                                 </Nav.Item>
                                 <Nav.Item eventKey="6" icon={<EmailIcon />}>
-                                    <Link to="/" style={linkStyle}>
+                                    <Link to="/information" style={linkStyle}>
                                         İletişim
                                     </Link>
                                 </Nav.Item>

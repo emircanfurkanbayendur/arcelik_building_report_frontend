@@ -12,6 +12,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import App from './App';
 import Auth from './Pages/Auth/Auth.jsx';
+import Team from './Pages/Team/Team.jsx';
+import Information from './Pages/Information/Inforamtion';
+import Project from './Pages/Project/Project';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import Footer from './components/Footer/Footer';
 import DocumentInquiry from './Pages/DocumentInquiry/DocumentInquiry';
@@ -32,6 +35,9 @@ root.render(
                         path="/documentinquiry"
                         element={<DocumentInquiry />}
                     />
+                    <Route path="/team" element={<Team />} />
+                    <Route path="/information" element={<Information />} />
+                    <Route path="/project" element={<Project />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>

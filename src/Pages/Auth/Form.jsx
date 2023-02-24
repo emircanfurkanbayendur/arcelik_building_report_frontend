@@ -5,7 +5,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { loginSchema, registerSchema } from './formSchema';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
-
+import { sha256, sha224 } from 'js-sha256';
+import axios from 'axios';
 import './styles.css';
 
 const initialValuesForRegister = {
@@ -34,6 +35,39 @@ const Form = () => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    const handleSave = (values) => {
+        if(isLogin==true){
+           console.log("loginekranı");
+           
+       } 
+       else {
+           let date = new Date().toJSON();
+           let newPass = sha256(values.password);
+           const url = 'https://localhost:7050/api/User';
+           const data = {
+               "firstName": values.firstName,
+               "lastName": values.lastName,
+               "email": values.email,
+               "password": newPass,
+               "createdAt": date,
+               "isActive": true,
+               "roleId": 0,
+               "role": {
+               "id": 0,
+               "name": "string"
+               }
+              
+               
+   
+           
+       }
+       axios.post(url,data).then((result) =>{
+           const dt = result.data;
+       })
+       
+       }
+   
+       };
 
     return (
         <Formik
@@ -223,6 +257,7 @@ const Form = () => {
                                             type="submit"
                                             fullWidth
                                             variant="outlined"
+                                            onClick={()=>handleSave(values)}
                                             sx={{
                                                 color: 'rgb(118, 118, 118)',
                                                 borderColor:
