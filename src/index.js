@@ -13,7 +13,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import App from './App';
 import Auth from './Pages/Auth/Auth.jsx';
 import NavigationBar from './components/NavigationBar/NavigationBar';
-import Footer from './components/NavigationBar/Footer';
+import Footer from './components/Footer/Footer';
+import DocumentInquiry from './Pages/DocumentInquiry/DocumentInquiry';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,6 +28,10 @@ root.render(
                 <Routes>
                     <Route path="/" element={<App />} />
                     <Route path="/auth" element={<Auth />} />
+                    <Route
+                        path="/documentinquiry"
+                        element={<DocumentInquiry />}
+                    />
                 </Routes>
                 <Footer />
             </BrowserRouter>

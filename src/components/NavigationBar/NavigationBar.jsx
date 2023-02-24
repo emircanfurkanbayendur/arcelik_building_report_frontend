@@ -33,7 +33,7 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                                 </Link>
                             </Nav.Item>
                             <Nav.Item eventKey="2" icon={<SearchIcon />}>
-                                <Link to="/" style={linkStyle}>
+                                <Link to="/documentinquiry" style={linkStyle}>
                                     Yapı Durum Belgesi Sorgulama
                                 </Link>
                             </Nav.Item>
