@@ -22,7 +22,7 @@ const QrCodeReader = ({ buildingCodeInput, setBuildingCodeInput }) => {
                     }}
                 />
                 {data && (
-                    <Alert variant="secondary">Qr Kod Sonucu: {data}</Alert>
+                    <Alert variant="secondary">QR Kod Sonucu: {data}</Alert>
                 )}
             </Card>
         </>

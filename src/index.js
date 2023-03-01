@@ -13,11 +13,12 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import App from './App';
 import Auth from './Pages/Auth/Auth.jsx';
 import Team from './Pages/Team/Team.jsx';
-import Information from './Pages/Information/Inforamtion';
+import Information from './Pages/Information/Information';
 import Project from './Pages/Project/Project';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import Footer from './components/Footer/Footer';
 import DocumentInquiry from './Pages/DocumentInquiry/DocumentInquiry';
+import Home from './Pages/Home/Home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,7 +30,7 @@ root.render(
             <BrowserRouter>
                 <NavigationBar />
                 <Routes>
-                    <Route path="/" element={<App />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route
                         path="/documentinquiry"
