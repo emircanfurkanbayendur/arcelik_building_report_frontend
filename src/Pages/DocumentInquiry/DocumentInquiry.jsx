@@ -116,7 +116,7 @@ const DocumentInquiry = () => {
                             {radioValue === '1'
                                 ? 'Adres Kullanarak Sorgulama Yap'
                                 : radioValue === '2'
-                                ? 'Qr Kod Kullanarak Sorgulama Yap'
+                                ? 'QR Kod Kullanarak Sorgulama Yap'
                                 : radioValue === '3'
                                 ? 'Yapı Kodu Kullanarak Sorgulama Yap'
                                 : ''}
@@ -283,7 +283,7 @@ const DocumentInquiry = () => {
                                     )}
                                 </>
                             )}
-                            {/* Qr Kod Kullanarak Sorgula */}
+                            {/* QR Kod Kullanarak Sorgula */}
                             {radioValue === '2' && (
                                 <>
                                     <Row>

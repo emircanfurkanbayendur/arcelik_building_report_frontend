@@ -15,14 +15,14 @@ function DragDrop({ uploadedImage, setUploadedImage }) {
             handleChange={handleChange}
             name="file"
             types={fileTypes}
-            label="Okutmak istediğiniz Qr Kod görselini buraya sürükleyiniz."
+            label="Okutmak istediğiniz QR Kod görselini buraya sürükleyiniz."
             hoverTitle="Buraya bırak."
             children={
                 <Row>
                     <Card>
                         <Card.Body>
                             <p>
-                                Buraya tıklayarak okutmak istediğiniz Qr Kod
+                                Buraya tıklayarak okutmak istediğiniz QR Kod
                                 görselini seçiniz.
                             </p>
 
