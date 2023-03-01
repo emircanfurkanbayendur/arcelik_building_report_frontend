@@ -18,7 +18,8 @@ import Project from './Pages/Project/Project';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import Footer from './components/Footer/Footer';
 import DocumentInquiry from './Pages/DocumentInquiry/DocumentInquiry';
-import Home from './Pages/Home/Home';
+import Home from './Pages/HomePage/HomePage';
+import HomePage from './Pages/HomePage/HomePage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,7 +31,7 @@ root.render(
             <BrowserRouter>
                 <NavigationBar />
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/HomePage" element={<HomePage />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route
                         path="/documentinquiry"

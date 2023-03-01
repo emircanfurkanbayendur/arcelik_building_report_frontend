@@ -28,7 +28,7 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                     <Col className="d-none d-lg-block">
                         <Nav onSelect={onSelect} activeKey={activeKey}>
                             <Nav.Item eventKey="1" icon={<HomeIcon />}>
-                                <Link to="/" style={linkStyle}>
+                                <Link to="/HomePage" style={linkStyle}>
                                     Anasayfa
                                 </Link>
                             </Nav.Item>
