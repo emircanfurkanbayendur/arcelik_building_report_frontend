@@ -20,6 +20,8 @@ import Footer from './components/Footer/Footer';
 import DocumentInquiry from './Pages/DocumentInquiry/DocumentInquiry';
 import Home from './Pages/HomePage/HomePage';
 import HomePage from './Pages/HomePage/HomePage';
+import Admin from './Pages/Admin/Admin';
+import CreateBuild from './Pages/Admin/CreateBuild/CreateBuild';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -31,15 +33,18 @@ root.render(
             <BrowserRouter>
                 <NavigationBar />
                 <Routes>
-                    <Route path="/HomePage" element={<HomePage />} />
-                    <Route path="/auth" element={<Auth />} />
+                    <Route path="HomePage" element={<HomePage />} />
+                    <Route path="auth" element={<Auth />} />
                     <Route
-                        path="/documentinquiry"
+                        path="documentinquiry"
                         element={<DocumentInquiry />}
                     />
-                    <Route path="/team" element={<Team />} />
-                    <Route path="/information" element={<Information />} />
-                    <Route path="/project" element={<Project />} />
+                    <Route path="admin" element={<Admin />}>
+                        <Route path="createbuild" element={<CreateBuild />} />
+                    </Route>
+                    <Route path="team" element={<Team />} />
+                    <Route path="information" element={<Information />} />
+                    <Route path="project" element={<Project />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>
