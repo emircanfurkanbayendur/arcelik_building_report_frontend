@@ -4,23 +4,36 @@ import axios from 'axios';
 export const saveUserToDatabase = async ({
     firstName,
     lastName,
-    mailAddress,
+    email,
     password,
 }) => {
     const user = {
+        id:0,
         firstName,
         lastName,
-        mailAddress,
+        email,
         password,
+        createdAt: new Date().toJSON(),
+        isActive: true,
+        roleId: 1,
     };
+//console.log(user)
+const user2={
+    "firstName": "values.firstName",
+    "lastName": "values.lastName",
+    "email": "values.email",
+    "password": "values.password",
+    "createdAt": new Date().toJSON(),
+    "isActive": true,
+    "roleId": 1,
 
-    await axios
-        .post(
-            `${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_API_PORT}`,
-            { user }
-        )
-        .then((res) => {
-            console.log(res);
-            console.log(res.data);
-        });
+
+
+} 
+const url = `${process.env.REACT_APP_BASE_URL}/api/User`;
+//console.log(user2)
+    await  axios.post(url, user).then((result) => {
+        const dt = result.data;
+    });
 };
+export default  saveUserToDatabase 
