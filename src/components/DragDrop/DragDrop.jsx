@@ -2,46 +2,38 @@ import React, { useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 import { Card, Row, Col, Figure } from 'react-bootstrap';
 
-const fileTypes = ['JPG', 'PNG', 'GIF'];
-
-function DragDrop({ uploadedImage, setUploadedImage }) {
+function DragDrop({ selectedFile, setSelectedFile, fileTypes, label }) {
     const handleChange = (file) => {
-        setUploadedImage(file);
+        setSelectedFile(file);
         console.log(file);
     };
-    console.log(`uploadedImage: ${uploadedImage}`);
+    console.log(`selectedFile: ${selectedFile}`);
     return (
         <FileUploader
             handleChange={handleChange}
             name="file"
             types={fileTypes}
-            label="Okutmak istediğiniz QR Kod görselini buraya sürükleyiniz."
+            label={label}
             hoverTitle="Buraya bırak."
             children={
-                <Row>
-                    <Card>
-                        <Card.Body>
-                            <p>
-                                Buraya tıklayarak okutmak istediğiniz QR Kod
-                                görselini seçiniz.
-                            </p>
+                <Card>
+                    <Card.Body>
+                        <p>{label}</p>
 
-                            {<hr></hr>}
-                            <small className="text-muted">
-                                İzin verilen dosya türleri:{' '}
-                                {fileTypes.join(',')}
-                            </small>
-                            {uploadedImage && (
-                                <>
-                                    {<hr></hr>}
-                                    <small className="text-muted">
-                                        Seçilen Dosya: {uploadedImage?.name}
-                                    </small>
-                                </>
-                            )}
-                        </Card.Body>
-                    </Card>
-                </Row>
+                        {<hr></hr>}
+                        <small className="text-muted">
+                            İzin verilen dosya türleri: {fileTypes.join(',')}
+                        </small>
+                        {selectedFile && (
+                            <>
+                                {<hr></hr>}
+                                <small className="text-muted">
+                                    Seçilen Dosya: {selectedFile?.name}
+                                </small>
+                            </>
+                        )}
+                    </Card.Body>
+                </Card>
             }
         />
     );

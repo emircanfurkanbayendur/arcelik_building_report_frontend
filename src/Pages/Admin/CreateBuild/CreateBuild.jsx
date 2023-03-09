@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { TextField, Autocomplete } from '@mui/material';
 import { Formik } from 'formik';
@@ -8,6 +8,7 @@ import counties from '../../DocumentInquiry/counties';
 import neighborhoods from '../../DocumentInquiry/neighborhoods';
 import streets from '../../DocumentInquiry/streets';
 import PopupModal from './PopupModal';
+import DragDrop from '../../../components/DragDrop/DragDrop';
 
 const initialValues = {
     cityName: '',
@@ -24,7 +25,10 @@ const handleFormSubmit = () => {};
 const handleSelect = () => {};
 
 const CreateBuild = () => {
-    const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow, setModalShow] = useState(false);
+    const [documentToUpload, setDocumentToUpload] = useState(null);
+
+    const fileTypes = ['PDF'];
 
     const handleClick = (setFieldValue) => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -260,7 +264,7 @@ const CreateBuild = () => {
                                                 />
                                             </Col>
                                         </Row>
-                                        <Row>
+                                        <Row className="mb-3">
                                             <Col sm={6} md={6} lg={3}>
                                                 <TextField
                                                     size="small"
@@ -319,7 +323,7 @@ const CreateBuild = () => {
                                                         )
                                                     }
                                                 >
-                                                    Konum Kullanarak Doldur
+                                                    Konumunu Kullan
                                                 </Button>
                                             </Col>
                                             <Col
@@ -337,6 +341,9 @@ const CreateBuild = () => {
                                                     Haritadan Seç
                                                 </Button>
                                                 <PopupModal
+                                                    setFieldValue={
+                                                        setFieldValue
+                                                    }
                                                     show={modalShow}
                                                     onHide={() =>
                                                         setModalShow(false)
@@ -344,7 +351,17 @@ const CreateBuild = () => {
                                                 />
                                             </Col>
                                         </Row>
-                                        <Row className="mt-3">
+                                        <Row>
+                                            <DragDrop
+                                                selectedFile={documentToUpload}
+                                                setSelectedFile={
+                                                    setDocumentToUpload
+                                                }
+                                                fileTypes={fileTypes}
+                                                label="Yüklemek istediğiniz dokümanı seçiniz."
+                                            />
+                                        </Row>
+                                        <Row className="mt-3 px-2">
                                             <Button variant="secondary">
                                                 Kaydet
                                             </Button>

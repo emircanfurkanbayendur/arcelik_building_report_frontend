@@ -1,4 +1,6 @@
+import { TextField } from '@mui/material';
 import { useState } from 'react';
+import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import MapPicker from 'react-google-map-picker';
@@ -18,6 +20,8 @@ const PopupModal = (props) => {
 
     function handleChangeLocation(lat, lng) {
         setLocation({ lat: lat, lng: lng });
+        props.setFieldValue('latitude', String(lat));
+        props.setFieldValue('longitude', String(lng));
     }
 
     function handleChangeZoom(newZoom) {
@@ -42,31 +46,56 @@ const PopupModal = (props) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>Centered Modal</h4>
-                <>
-                    <button onClick={handleResetLocation}>
-                        Reset Location
-                    </button>
-                    <label>Latitute:</label>
-                    <input type="text" value={location.lat} disabled />
-                    <label>Longitute:</label>
-                    <input type="text" value={location.lng} disabled />
-                    <label>Zoom:</label>
-                    <input type="text" value={zoom} disabled />
+                <Row>
+                    <h5>Lokasyon Bilgileri</h5>
+                </Row>
+                <Row className="mb-2">
+                    <Col sm={6}>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            label="Enlem (Latitude)"
+                            variant="outlined"
+                            value={location.lat}
+                            onChange={(e) =>
+                                handleChangeLocation(
+                                    e.target.value,
+                                    location.lng
+                                )
+                            }
+                        />
+                    </Col>
+                    <Col sm={6}>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            label="Boylam (Longitude)"
+                            variant="outlined"
+                            value={location.lng}
+                            onChange={(e) =>
+                                handleChangeLocation(
+                                    location.lat,
+                                    e.target.value
+                                )
+                            }
+                        />
+                    </Col>
+                </Row>
 
-                    <MapPicker
-                        defaultLocation={defaultLocation}
-                        zoom={zoom}
-                        mapTypeId="roadmap"
-                        style={{ height: '700px' }}
-                        onChangeLocation={handleChangeLocation}
-                        onChangeZoom={handleChangeZoom}
-                        apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
-                    />
-                </>
+                <MapPicker
+                    defaultLocation={defaultLocation}
+                    zoom={zoom}
+                    mapTypeId="roadmap"
+                    style={{ height: '700px' }}
+                    onChangeLocation={handleChangeLocation}
+                    onChangeZoom={handleChangeZoom}
+                    apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
+                />
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
+                <Button variant="secondary" onClick={props.onHide}>
+                    Kaydet
+                </Button>
             </Modal.Footer>
         </Modal>
     );

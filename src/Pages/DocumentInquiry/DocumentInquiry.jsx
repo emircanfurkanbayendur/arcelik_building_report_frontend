@@ -36,6 +36,8 @@ const DocumentInquiry = () => {
         cityName: '',
     });
 
+    const fileTypes = ['JPG', 'PNG', 'GIF'];
+
     const buttonTypes = [
         { name: 'Adres Kullanarak Sorgula', value: '1' },
         { name: 'QR Kod Kullanarak Sorgula', value: '2' },
@@ -287,10 +289,18 @@ const DocumentInquiry = () => {
                             {radioValue === '2' && (
                                 <>
                                     <Row>
-                                        <DragDrop
-                                            uploadedImage={uploadedImage}
-                                            setUploadedImage={setUploadedImage}
-                                        />
+                                        <Card>
+                                            <Card.Body>
+                                                <DragDrop
+                                                    selectedFile={uploadedImage}
+                                                    setSelectedFile={
+                                                        setUploadedImage
+                                                    }
+                                                    fileTypes={fileTypes}
+                                                    label="Okutmak istediğiniz QR Kod görselini buraya sürükleyiniz."
+                                                />
+                                            </Card.Body>
+                                        </Card>
                                     </Row>
                                     {isCameraAllowed && (
                                         <Row className="mt-2">
