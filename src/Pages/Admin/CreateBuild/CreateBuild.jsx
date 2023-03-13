@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import { TextField, Autocomplete } from '@mui/material';
 import { Formik } from 'formik';
 import { formSchema } from './formSchema';
@@ -9,6 +9,7 @@ import neighborhoods from '../../DocumentInquiry/neighborhoods';
 import streets from '../../DocumentInquiry/streets';
 import PopupModal from './PopupModal';
 import DragDrop from '../../../components/DragDrop/DragDrop';
+import postBuilding from '../../../api/building';
 
 const initialValues = {
     cityName: '',
@@ -21,14 +22,38 @@ const initialValues = {
     longitude: '-',
 };
 
-const handleFormSubmit = () => {};
 const handleSelect = () => {};
+
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
+}
 
 const CreateBuild = () => {
     const [modalShow, setModalShow] = useState(false);
     const [documentToUpload, setDocumentToUpload] = useState(null);
+    const [isPending, setIsPending] = useState(false);
 
     const fileTypes = ['PDF'];
+
+    const handleFormSubmit = async (values) => {
+        await postBuilding({
+            name: values.buildingName,
+            city: values.cityName,
+            district: values.countyName,
+            neighbourhood: values.neighbourhoodName,
+            street: values.streetName,
+            buildingNumber: 0,
+            code: values.buildingCode,
+            latitude: values.latitude,
+            longitude: values.longitude,
+            createdByUserId: 1,
+        });
+    };
 
     const handleClick = (setFieldValue) => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -44,6 +69,10 @@ const CreateBuild = () => {
         });
     };
 
+    useEffect(() => {
+        getBase64(documentToUpload).then((data) => console.log(typeof data));
+    }, [documentToUpload]);
+
     return (
         <Container
             style={{
@@ -56,7 +85,7 @@ const CreateBuild = () => {
                     <Card.Body>
                         <Formik
                             enableReinitialize={true}
-                            onSubmit={handleFormSubmit}
+                            onSubmit={(values) => handleFormSubmit(values)}
                             initialValues={initialValues}
                             validationSchema={formSchema}
                         >
@@ -362,9 +391,29 @@ const CreateBuild = () => {
                                             />
                                         </Row>
                                         <Row className="mt-3 px-2">
-                                            <Button variant="secondary">
-                                                Kaydet
+                                            <Button
+                                                type="submit"
+                                                variant="secondary"
+                                                disabled={
+                                                    isPending ? true : false
+                                                }
+                                                onClick={async () => {
+                                                    setIsPending(true);
+                                                    handleFormSubmit(values);
+                                                    setIsPending(false);
+                                                }}
+                                            >
+                                                {!isPending && 'Kaydet'}
+                                                {isPending && (
+                                                    <Spinner animation="border" />
+                                                )}
                                             </Button>
+                                            <button
+                                                type="submit"
+                                                onClick={handleFormSubmit}
+                                            >
+                                                as
+                                            </button>
                                         </Row>
                                     </Container>
                                 </form>
