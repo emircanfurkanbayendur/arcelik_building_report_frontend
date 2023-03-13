@@ -1,14 +1,13 @@
 import axios from 'axios';
 
+const POST_USER_URL = `${process.env.REACT_APP_BASE_URL}/api/User`;
+
 // Example API request when button is clicked.
-export const saveUserToDatabase = async ({
-    firstName,
-    lastName,
-    email,
-    password,
-}) => {
+export const postUser = async ({ firstName, lastName, email, password }) => {
+    var resultData;
+
     const user = {
-        id:0,
+        id: 0,
         firstName,
         lastName,
         email,
@@ -17,23 +16,11 @@ export const saveUserToDatabase = async ({
         isActive: true,
         roleId: 1,
     };
-//console.log(user)
-const user2={
-    "firstName": "values.firstName",
-    "lastName": "values.lastName",
-    "email": "values.email",
-    "password": "values.password",
-    "createdAt": new Date().toJSON(),
-    "isActive": true,
-    "roleId": 1,
 
-
-
-} 
-const url = `${process.env.REACT_APP_BASE_URL}/api/User`;
-//console.log(user2)
-    await  axios.post(url, user).then((result) => {
-        const dt = result.data;
+    await axios.post(POST_USER_URL, user).then(async (result) => {
+        resultData = await result.data;
     });
+
+    return await resultData;
 };
-export default  saveUserToDatabase 
+export default postUser;

@@ -4,11 +4,12 @@ import { TextField, Button, IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { loginSchema, registerSchema } from './formSchema';
-import { Container, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
 import { sha256, sha224 } from 'js-sha256';
 import axios from 'axios';
 import './styles.css';
-import saveUserToDatabase from '../../api/auth';
+import postUser from '../../api/auth';
+import { isDisabled } from '@testing-library/user-event/dist/utils';
 const initialValuesForRegister = {
     firstName: '',
     lastName: '',
@@ -26,6 +27,7 @@ const handleFormSubmit = () => {};
 const Form = () => {
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [pageType, setPageType] = useState('login');
+    const [isPending, setIsPending] = useState(false);
     const isLogin = pageType === 'login';
     const isRegister = pageType === 'register';
 
@@ -35,7 +37,6 @@ const Form = () => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    
 
     return (
         <Formik
@@ -225,7 +226,13 @@ const Form = () => {
                                             type="submit"
                                             fullWidth
                                             variant="outlined"
-                                            onClick={() => saveUserToDatabase(values)}
+                                            disabled={isPending ? true : false}
+                                            onClick={async () => {
+                                                setIsPending(true);
+                                                let x = await postUser(values);
+                                                await console.log(x);
+                                                setIsPending(false);
+                                            }}
                                             sx={{
                                                 color: 'rgb(118, 118, 118)',
                                                 borderColor:
@@ -238,9 +245,15 @@ const Form = () => {
                                                 },
                                             }}
                                         >
-                                            {isLogin
+                                            {isLogin && !isPending
                                                 ? 'Giriş yap'
-                                                : 'Hesap oluştur'}
+                                                : !isLogin && !isPending
+                                                ? 'Hesap oluştur'
+                                                : ''}
+
+                                            {isPending && (
+                                                <Spinner animation="border" />
+                                            )}
                                         </Button>
                                     </Col>
                                 </Row>
@@ -259,6 +272,7 @@ const Form = () => {
                                                         ? 'register'
                                                         : 'login'
                                                 );
+                                                setIsPending(false);
                                                 resetForm();
                                             }}
                                         >
