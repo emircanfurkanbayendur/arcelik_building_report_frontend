@@ -1,21 +1,74 @@
-import React from 'react';
+import { TextField } from '@mui/material';
+import React, { useState } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import QRCode from 'react-qr-code';
 
-const ListCardItem = ({ buildingInfo }) => {
+const ListCardItem = () => {
+    const [isInEditMode, setIsInEditMode] = useState(false);
+    const [buildingInfo, setBuildingInfo] = useState({
+        code: '123456789',
+        name: 'Test Apartmanı',
+        address: 'Abc Mahallesi, Abc Sokak, No: 1 Çankaya/Ankara',
+        updatedAt: '02.07.2022',
+    });
+
     return (
         <Card className="mb-3">
             <Card.Body>
                 <Row className="align-items-center">
                     <Col sm={10}>
                         <Card.Title>
-                            <h1>Test Apartmanı</h1>
+                            <h1>
+                                {!isInEditMode ? (
+                                    buildingInfo.name
+                                ) : (
+                                    <>
+                                        <h5>Yapı Adı:</h5>
+                                        <TextField
+                                            size="small"
+                                            fullWidth
+                                            value={buildingInfo.name}
+                                            onChange={(
+                                                event: React.ChangeEvent<HTMLInputElement>
+                                            ) => {
+                                                setBuildingInfo((prev) => ({
+                                                    ...prev,
+                                                    name: event.target.value,
+                                                }));
+
+                                                console.log(buildingInfo);
+                                            }}
+                                        />
+                                    </>
+                                )}
+                            </h1>
                         </Card.Title>
                         <Card.Subtitle className="mb-1 text-muted">
-                            Yapı Kodu: 123456789
+                            Yapı Kodu:{' '}
+                            {!isInEditMode ? (
+                                buildingInfo.code
+                            ) : (
+                                <>
+                                    <TextField
+                                        size="small"
+                                        fullWidth
+                                        value={buildingInfo.code}
+                                        onChange={(
+                                            event: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                            setBuildingInfo((prev) => ({
+                                                ...prev,
+                                                code: event.target.value,
+                                            }));
+
+                                            console.log(buildingInfo);
+                                        }}
+                                    />
+                                </>
+                            )}
                         </Card.Subtitle>
                         <Card.Subtitle className="mb-1 text-muted">
-                            Güncellenme Tarihi: 02.07.2022
+                            Güncellenme Tarihi: {buildingInfo.updatedAt}
                         </Card.Subtitle>
                     </Col>
                     <Col sm={2}>
@@ -26,7 +79,7 @@ const ListCardItem = ({ buildingInfo }) => {
                                 maxWidth: '100%',
                                 width: '100%',
                             }}
-                            value={123456789}
+                            value={buildingInfo.code}
                         />
                     </Col>
                     <Col sm={1}></Col>
@@ -37,7 +90,27 @@ const ListCardItem = ({ buildingInfo }) => {
                             Adres Bilgisi:
                         </Card.Subtitle>
                         <Card.Text>
-                            Abc Mahallesi, Abc Sokak, No: 1 Çankaya/Ankara
+                            {!isInEditMode ? (
+                                buildingInfo.address
+                            ) : (
+                                <>
+                                    <TextField
+                                        size="small"
+                                        fullWidth
+                                        value={buildingInfo.address}
+                                        onChange={(
+                                            event: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                            setBuildingInfo((prev) => ({
+                                                ...prev,
+                                                address: event.target.value,
+                                            }));
+
+                                            console.log(buildingInfo);
+                                        }}
+                                    />
+                                </>
+                            )}
                         </Card.Text>
                     </Col>
                     <Col sm={2} className="pt-2">
@@ -47,8 +120,14 @@ const ListCardItem = ({ buildingInfo }) => {
                             </Button>
                         </Row>
                         <Row>
-                            <Button variant="secondary" size="sm">
-                                Kaydı düzenle
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                onClick={() => {
+                                    setIsInEditMode((prev) => !prev);
+                                }}
+                            >
+                                {!isInEditMode ? 'Kaydı düzenle' : 'Kaydet'}
                             </Button>
                         </Row>
                     </Col>
