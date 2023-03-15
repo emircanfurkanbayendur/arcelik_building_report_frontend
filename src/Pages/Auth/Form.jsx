@@ -228,12 +228,20 @@ const Form = () => {
                                             disabled={isPending ? true : false}
                                             onClick={async () => {
                                                 setIsPending(true);
-                                                let user = isLogin
-                                                    ? await postAuthenticate(
-                                                          values
-                                                      )
-                                                    : await postUser(values);
-                                                await console.log(user);
+                                                let user;
+
+                                                if (!isLogin) {
+                                                    await postUser(values);
+                                                    user =
+                                                        await postAuthenticate(
+                                                            values
+                                                        );
+                                                } else {
+                                                    user =
+                                                        await postAuthenticate(
+                                                            values
+                                                        );
+                                                }
                                                 setIsPending(false);
 
                                                 if (user) {

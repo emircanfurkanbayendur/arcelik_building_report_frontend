@@ -47,4 +47,3 @@ export const postBuilding = async ({
 
     return await resultData;
 };
-export default postBuilding;

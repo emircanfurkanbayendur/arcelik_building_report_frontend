@@ -64,7 +64,14 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                     <Col>
                         <Nav pullRight>
                             <Nav.Item icon={<UserInfoIcon />}>
-                                <Link to="/auth" style={linkStyle}>
+                                <Link
+                                    to={
+                                        localStorage.getItem('user')
+                                            ? '/admin'
+                                            : '/auth'
+                                    }
+                                    style={linkStyle}
+                                >
                                     {localStorage.getItem('user')
                                         ? JSON.parse(
                                               localStorage.getItem('user')

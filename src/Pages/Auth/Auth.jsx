@@ -5,6 +5,8 @@ import Form from './Form';
 import AUTH_IMAGE from '../../images/auth_image.avif';
 
 const Auth = () => {
+    if (localStorage.getItem('user')) return window.location.replace('/');
+
     return (
         <>
             <Container fluid>

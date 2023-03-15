@@ -5,7 +5,10 @@ import CreateBuild from './CreateBuild/CreateBuild';
 import ListBuilds from './ListBuilds/ListBuilds';
 
 const Admin = () => {
-    if (JSON.parse(localStorage.getItem('user')).roleId != 1) {
+    if (
+        !localStorage.getItem('user') ||
+        JSON.parse(localStorage.getItem('user')).roleId != 1
+    ) {
         return window.location.replace('/auth');
     }
     return (

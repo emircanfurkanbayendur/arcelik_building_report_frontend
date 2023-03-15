@@ -9,7 +9,8 @@ import neighborhoods from '../../DocumentInquiry/neighborhoods';
 import streets from '../../DocumentInquiry/streets';
 import PopupModal from './PopupModal';
 import DragDrop from '../../../components/DragDrop/DragDrop';
-import postBuilding from '../../../api/building';
+import { postBuilding } from '../../../api/building';
+import { postDocument } from '../../../api/document';
 
 const initialValues = {
     cityName: '',
@@ -39,9 +40,10 @@ const CreateBuild = () => {
     const [isPending, setIsPending] = useState(false);
 
     const fileTypes = ['PDF'];
+    let utf8Encode = new TextEncoder();
 
     const handleFormSubmit = async (values) => {
-        await postBuilding({
+        const { createdByUserId, id } = await postBuilding({
             name: values.buildingName,
             city: values.cityName,
             district: values.countyName,
@@ -53,24 +55,24 @@ const CreateBuild = () => {
             longitude: values.longitude,
             createdByUserId: JSON.parse(localStorage.getItem('user')).id,
         });
+
+        const document = await postDocument({
+            report: getBase64(documentToUpload).then((data) => data),
+            uploadedByUserId: createdByUserId,
+            buildingId: id,
+        });
     };
 
     const handleClick = (setFieldValue) => {
         navigator.geolocation.getCurrentPosition((position) => {
             setFieldValue('latitude', String(position.coords.latitude));
             setFieldValue('longitude', String(position.coords.longitude));
-
-            console.log(
-                `position.coords.latitude: ${position.coords.latitude}`
-            );
-            console.log(
-                `position.coords.longitude: ${position.coords.longitude}`
-            );
         });
     };
 
     useEffect(() => {
-        getBase64(documentToUpload).then((data) => console.log(typeof data));
+        let x = getBase64(documentToUpload).then((data) => data);
+        console.log(utf8Encode.encode(x));
     }, [documentToUpload]);
 
     return (
