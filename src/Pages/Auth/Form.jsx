@@ -249,6 +249,8 @@ const Form = () => {
                                                         'user',
                                                         JSON.stringify(user)
                                                     );
+                                                    localStorage.setItem("token",user.token);
+                                                    
                                                     window.location.replace(
                                                         '/admin'
                                                     );

@@ -9,13 +9,26 @@ import MemberIcon from '@rsuite/icons/Member';
 import EmailIcon from '@rsuite/icons/Email';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-
+import {useNavigate} from "react-router-dom"
+import {Button} from '@mui/material';
 const linkStyle = {
     textDecoration: 'none',
     color: '#000',
 };
 
 const NavigationBar = ({ onSelect, activeKey, ...props }) => {
+    const navigation = useNavigate();
+    const informations = () => {
+        if(localStorage.getItem("user")==null){
+            navigation("/auth");
+        
+        
+        }
+        else{
+            
+            navigation("/profile");
+            };
+    }
     return (
         <Container fluid>
             <Row>
@@ -64,24 +77,18 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                     <Col>
                         <Nav pullRight>
                             <Nav.Item icon={<UserInfoIcon />}>
-                                <Link
-                                    to={
-                                        localStorage.getItem('user')
-                                            ? '/admin'
-                                            : '/auth'
-                                    }
-                                    style={linkStyle}
-                                >
-                                    {localStorage.getItem('user')
-                                        ? JSON.parse(
-                                              localStorage.getItem('user')
-                                          ).firstName +
-                                          ' ' +
-                                          JSON.parse(
-                                              localStorage.getItem('user')
-                                          ).lastName
-                                        : 'Kullanıcı Girişi'}
-                                </Link>
+                            <Button onClick={()=>informations()}>
+                                {localStorage.getItem("user")==null
+                                                ? 'Kullanıcı Girişi'
+                                                : JSON.parse(
+                                                    localStorage.getItem('user')
+                                                ).firstName +
+                                                ' ' +
+                                                JSON.parse(
+                                                    localStorage.getItem('user')
+                                                ).lastName}
+                                   
+                                </Button>
                             </Nav.Item>
                         </Nav>
                     </Col>

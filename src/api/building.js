@@ -36,7 +36,7 @@ export const postBuilding = async ({
     let config = {
         headers: {
             Authorization:
-                'Bearer ' + JSON.parse(localStorage.getItem('user'))?.token,
+                'Bearer ' + localStorage.getItem("token")?.token,
         },
     };
     await axios

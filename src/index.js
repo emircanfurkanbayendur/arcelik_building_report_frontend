@@ -22,7 +22,8 @@ import Home from './Pages/HomePage/HomePage';
 import HomePage from './Pages/HomePage/HomePage';
 import Admin from './Pages/Admin/Admin';
 import CreateBuild from './Pages/Admin/CreateBuild/CreateBuild';
-
+import Profile from './Pages/Profile/Profile';
+import Update from './Pages/Profile/Update';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
@@ -45,6 +46,8 @@ root.render(
                     <Route path="team" element={<Team />} />
                     <Route path="information" element={<Information />} />
                     <Route path="project" element={<Project />} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="update" element={<Update />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>
