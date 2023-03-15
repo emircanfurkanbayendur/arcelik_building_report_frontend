@@ -51,7 +51,7 @@ const CreateBuild = () => {
             code: values.buildingCode,
             latitude: values.latitude,
             longitude: values.longitude,
-            createdByUserId: 1,
+            createdByUserId: JSON.parse(localStorage.getItem('user')).id,
         });
     };
 
@@ -408,12 +408,6 @@ const CreateBuild = () => {
                                                     <Spinner animation="border" />
                                                 )}
                                             </Button>
-                                            <button
-                                                type="submit"
-                                                onClick={handleFormSubmit}
-                                            >
-                                                as
-                                            </button>
                                         </Row>
                                     </Container>
                                 </form>

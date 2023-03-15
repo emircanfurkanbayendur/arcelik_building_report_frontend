@@ -5,11 +5,10 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { loginSchema, registerSchema } from './formSchema';
 import { Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
-import { sha256, sha224 } from 'js-sha256';
-import axios from 'axios';
 import './styles.css';
-import postUser from '../../api/auth';
-import { isDisabled } from '@testing-library/user-event/dist/utils';
+import { postUser, postAuthenticate } from '../../api/auth';
+import { Navigate } from 'react-router-dom';
+
 const initialValuesForRegister = {
     firstName: '',
     lastName: '',
@@ -229,9 +228,23 @@ const Form = () => {
                                             disabled={isPending ? true : false}
                                             onClick={async () => {
                                                 setIsPending(true);
-                                                let x = await postUser(values);
-                                                await console.log(x);
+                                                let user = isLogin
+                                                    ? await postAuthenticate(
+                                                          values
+                                                      )
+                                                    : await postUser(values);
+                                                await console.log(user);
                                                 setIsPending(false);
+
+                                                if (user) {
+                                                    localStorage.setItem(
+                                                        'user',
+                                                        JSON.stringify(user)
+                                                    );
+                                                    window.location.replace(
+                                                        '/admin'
+                                                    );
+                                                }
                                             }}
                                             sx={{
                                                 color: 'rgb(118, 118, 118)',

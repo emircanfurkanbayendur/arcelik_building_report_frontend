@@ -65,7 +65,15 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                         <Nav pullRight>
                             <Nav.Item icon={<UserInfoIcon />}>
                                 <Link to="/auth" style={linkStyle}>
-                                    Kullanıcı Girişi
+                                    {localStorage.getItem('user')
+                                        ? JSON.parse(
+                                              localStorage.getItem('user')
+                                          ).firstName +
+                                          ' ' +
+                                          JSON.parse(
+                                              localStorage.getItem('user')
+                                          ).lastName
+                                        : 'Kullanıcı Girişi'}
                                 </Link>
                             </Nav.Item>
                         </Nav>
