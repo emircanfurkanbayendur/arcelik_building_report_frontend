@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { formSchema } from './formSchema';
 import cities from '../../DocumentInquiry/cities';
 import counties from '../../DocumentInquiry/counties';
-import neighborhoods from '../../DocumentInquiry/neighborhoods';
+import neighbourhoods from '../../DocumentInquiry/neighbourhoods';
 import streets from '../../DocumentInquiry/streets';
 import PopupModal from './PopupModal';
 import DragDrop from '../../../components/DragDrop/DragDrop';
@@ -188,7 +188,7 @@ const CreateBuild = () => {
                                                     size="small"
                                                     disablePortal
                                                     id="combo-box-neighbourhoods"
-                                                    options={neighborhoods}
+                                                    options={neighbourhoods}
                                                     renderInput={(params) => (
                                                         <TextField
                                                             name="neighbourhoodName"

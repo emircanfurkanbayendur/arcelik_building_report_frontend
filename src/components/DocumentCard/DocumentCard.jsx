@@ -2,29 +2,34 @@ import Card from 'react-bootstrap/Card';
 import { Row, Col, Button } from 'react-bootstrap';
 import QRCode from 'react-qr-code';
 
-function TextExample({
-    isThereResult,
-    buildingCode,
-    buildingTitle,
-    address,
-    updateDate,
-    qrCodeValue,
-}) {
+const addressToString = (
+    neighbourhood,
+    street,
+    buildingName,
+    district,
+    city
+) => {
+    return `${neighbourhood}, ${street}, ${buildingName} ${district}/${city}`;
+};
+
+const DocumentCard = ({ buildingInfo }) => {
+    console.log('props');
+    console.log(buildingInfo);
     return (
         <Card style={{ width: '100%' }}>
             <Card.Body>
                 <Row className="align-items-center">
                     <Col sm={8}>
                         <Card.Title>
-                            {isThereResult
-                                ? buildingTitle
+                            {buildingInfo.id > 0
+                                ? buildingInfo.name
                                 : 'Lütfen geçerli bilgi giriniz'}
                         </Card.Title>
                         <Card.Subtitle className="mb-1 text-muted">
-                            Yapı Kodu: {buildingCode}
+                            Yapı Kodu: {buildingInfo.code}
                         </Card.Subtitle>
                         <Card.Subtitle className="mb-1 text-muted">
-                            Güncellenme Tarihi: {updateDate}
+                            Güncellenme Tarihi: {'yar'}
                         </Card.Subtitle>
                     </Col>
                     <Col sm={4}>
@@ -35,18 +40,26 @@ function TextExample({
                                 maxWidth: '100%',
                                 width: '100%',
                             }}
-                            value={String(qrCodeValue)}
+                            value={String(buildingInfo.code)}
                         />
                     </Col>
                 </Row>
 
-                {isThereResult && (
+                {buildingInfo.id > 0 && (
                     <Row>
                         <Col sm={12}>
                             <Card.Subtitle className="mt-2 text-muted">
                                 Adres Bilgisi:
                             </Card.Subtitle>
-                            <Card.Text>{address}</Card.Text>
+                            <Card.Text>
+                                {addressToString(
+                                    buildingInfo.neighbourhood,
+                                    buildingInfo.street,
+                                    buildingInfo.name,
+                                    buildingInfo.district,
+                                    buildingInfo.city
+                                )}
+                            </Card.Text>
                         </Col>
                         <Col sm={12}>
                             <Row className="mt-3 mb-1">
@@ -67,6 +80,6 @@ function TextExample({
             </Card.Body>
         </Card>
     );
-}
+};
 
-export default TextExample;
+export default DocumentCard;

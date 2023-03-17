@@ -46,3 +46,15 @@ export const postBuilding = async ({
 
     return await resultData;
 };
+
+export const getBuildingByCode = async (buildingCode) => {
+    var resultData;
+
+    await axios
+        .get(`${BUILDING_ENDPOINT_URL}/code/${buildingCode}`)
+        .then(async (result) => {
+            resultData = await result.data;
+        });
+
+    return await resultData;
+};
