@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const POST_BUILDING_URL = `${process.env.REACT_APP_BASE_URL}/api/Building`;
+const BUILDING_ENDPOINT_URL = `${process.env.REACT_APP_BASE_URL}/api/Building`;
 
 // Example API request when button is clicked.
 export const postBuilding = async ({
@@ -35,12 +35,11 @@ export const postBuilding = async ({
 
     let config = {
         headers: {
-            Authorization:
-                'Bearer ' + localStorage.getItem("token")?.token,
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
     };
     await axios
-        .post(POST_BUILDING_URL, building, config)
+        .post(BUILDING_ENDPOINT_URL, building, config)
         .then(async (result) => {
             resultData = await result.data;
         });

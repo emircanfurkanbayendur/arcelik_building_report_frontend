@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 import { Card, Alert } from 'react-bootstrap';
-import getDocument from '../../api/getDocument';
+import { getDocument } from '../../api/document';
 const QrCodeReader = ({ buildingCodeInput, setBuildingCodeInput }) => {
     const [data, setData] = useState(buildingCodeInput);
-    
+
     return (
         <>
             <Card>
@@ -16,8 +16,8 @@ const QrCodeReader = ({ buildingCodeInput, setBuildingCodeInput }) => {
                                 setData(result.text);
                                 setBuildingCodeInput(result.text);
                                 console.log(result.text);
-                                var x =  getDocument(result.text);
-                                console.log(x); 
+                                var x = getDocument(result.text);
+                                console.log(x);
                             }, 100);
                         }
 
@@ -27,9 +27,7 @@ const QrCodeReader = ({ buildingCodeInput, setBuildingCodeInput }) => {
                     }}
                 />
                 {data && (
-                    <Alert variant="secondary">QR Kod Sonucu: {data}
-                    
-                    </Alert>
+                    <Alert variant="secondary">QR Kod Sonucu: {data}</Alert>
                 )}
             </Card>
         </>

@@ -25,14 +25,14 @@ const initialValues = {
 
 const handleSelect = () => {};
 
-function getBase64(file) {
+const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = (error) => reject(error);
     });
-}
+};
 
 const CreateBuild = () => {
     const [modalShow, setModalShow] = useState(false);
@@ -57,7 +57,9 @@ const CreateBuild = () => {
         });
 
         const document = await postDocument({
-            report: getBase64(documentToUpload).then((data) => data),
+            report: await getBase64(documentToUpload).then((data) =>
+                data.replace('data:application/pdf;base64,', '')
+            ),
             uploadedByUserId: createdByUserId,
             buildingId: id,
         });
@@ -71,8 +73,11 @@ const CreateBuild = () => {
     };
 
     useEffect(() => {
-        let x = getBase64(documentToUpload).then((data) => data);
-        console.log(utf8Encode.encode(x));
+        let buffer;
+        let x = getBase64(documentToUpload).then((data) => {
+            console.log(data);
+            console.log(data.replace('data:application/pdf;base64,', ''));
+        });
     }, [documentToUpload]);
 
     return (
