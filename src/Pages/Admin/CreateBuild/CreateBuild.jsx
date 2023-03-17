@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { formSchema } from './formSchema';
 import cities from '../../DocumentInquiry/cities';
 import counties from '../../DocumentInquiry/counties';
-import neighborhoods from '../../DocumentInquiry/neighborhoods';
+import neighbourhoods from '../../DocumentInquiry/neighbourhoods';
 import streets from '../../DocumentInquiry/streets';
 import PopupModal from './PopupModal';
 import DragDrop from '../../../components/DragDrop/DragDrop';
@@ -25,14 +25,14 @@ const initialValues = {
 
 const handleSelect = () => {};
 
-function getBase64(file) {
+const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = (error) => reject(error);
     });
-}
+};
 
 const CreateBuild = () => {
     const [modalShow, setModalShow] = useState(false);
@@ -57,7 +57,9 @@ const CreateBuild = () => {
         });
 
         const document = await postDocument({
-            report: getBase64(documentToUpload).then((data) => data),
+            report: await getBase64(documentToUpload).then((data) =>
+                data.replace('data:application/pdf;base64,', '')
+            ),
             uploadedByUserId: createdByUserId,
             buildingId: id,
         });
@@ -71,8 +73,11 @@ const CreateBuild = () => {
     };
 
     useEffect(() => {
-        let x = getBase64(documentToUpload).then((data) => data);
-        console.log(utf8Encode.encode(x));
+        let buffer;
+        let x = getBase64(documentToUpload).then((data) => {
+            console.log(data);
+            console.log(data.replace('data:application/pdf;base64,', ''));
+        });
     }, [documentToUpload]);
 
     return (
@@ -183,7 +188,7 @@ const CreateBuild = () => {
                                                     size="small"
                                                     disablePortal
                                                     id="combo-box-neighbourhoods"
-                                                    options={neighborhoods}
+                                                    options={neighbourhoods}
                                                     renderInput={(params) => (
                                                         <TextField
                                                             name="neighbourhoodName"

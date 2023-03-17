@@ -17,23 +17,31 @@ import QrScanner from 'qr-scanner';
 
 import cities from './cities';
 import counties from './counties';
-import neighborhoods from './neighborhoods';
+import neighbourhoods from './neighbourhoods';
 import streets from './streets';
 import buildings from './buildings';
+import { getBuildingByCode } from '../../api/building';
 
 const DocumentInquiry = () => {
-    const [isButtonChecked, setIsButtonChecked] = useState(false);
     const [radioValue, setRadioValue] = useState('1');
     const [isCameraAllowed, setIsCameraAllowed] = useState(false);
     const [uploadedImage, setUploadedImage] = useState(null);
     const [buildingCodeInput, setBuildingCodeInput] = useState(null);
-    const [fullAddress, setFullAddress] = useState('');
-    const [addressInfo, setAddressInfo] = useState({
-        buildingName: '',
-        streetName: '',
-        neighborhoodName: '',
-        countyName: '',
-        cityName: '',
+    const [buildingInfo, setBuildingInfo] = useState({
+        id: 0,
+        buildingNumber: 0,
+        code: '',
+        name: '',
+        city: '',
+        district: '',
+        neighbourhood: '',
+        street: '',
+        latitude: '',
+        longitude: '',
+        documents: [],
+        createdByUser: {},
+        isActive: true,
+        registeredAt: '',
     });
 
     const fileTypes = ['JPG', 'PNG', 'GIF'];
@@ -44,27 +52,18 @@ const DocumentInquiry = () => {
         { name: 'Yapı Kodu Kullanarak Sorgula', value: '3' },
     ];
 
-    const handleClick = () => {
-        setFullAddress(addressToString());
+    const handleClick = async () => {
+        if (radioValue == '2' || radioValue == '3') {
+            const building = await getBuildingByCode(buildingCodeInput);
+            await setBuildingInfo(building);
+
+            console.log('building');
+            console.log(building);
+            console.log(buildingInfo);
+        }
     };
 
-    const addressToString = () => {
-        return `${addressInfo.neighborhoodName}, ${addressInfo.streetName}, ${addressInfo.buildingName} ${addressInfo.countyName}/${addressInfo.cityName}`;
-    };
-
-    const clearAddressForm = () => {
-        setAddressInfo({
-            buildingName: '',
-            streetName: '',
-            neighborhoodName: '',
-            countyName: '',
-            cityName: '',
-        });
-    };
-
-    const handleSelect = (e) => {
-        setAddressInfo({ ...addressInfo, [e.target.name]: e.target.value });
-    };
+    const handleSelect = (e) => {};
 
     useEffect(() => {
         QrScanner.scanImage(uploadedImage, {
@@ -184,9 +183,9 @@ const DocumentInquiry = () => {
                                                     <Col sm={12}>
                                                         <Autocomplete
                                                             disablePortal
-                                                            id="combo-box-neighborhoods"
+                                                            id="combo-box-neighbourhoods"
                                                             options={
-                                                                neighborhoods
+                                                                neighbourhoods
                                                             }
                                                             sx={{
                                                                 width: '100%',
@@ -195,7 +194,7 @@ const DocumentInquiry = () => {
                                                                 params
                                                             ) => (
                                                                 <TextField
-                                                                    name="neighborhoodName"
+                                                                    name="neighbourhoodName"
                                                                     onSelect={
                                                                         handleSelect
                                                                     }
@@ -399,24 +398,7 @@ const DocumentInquiry = () => {
                         </Col>
 
                         <Col sm={6}>
-                            <DocumentCard
-                                isThereResult={true}
-                                buildingCode={
-                                    buildingCodeInput
-                                        ? String(buildingCodeInput)
-                                        : '123456'
-                                }
-                                buildingTitle={
-                                    addressInfo.buildingName
-                                        ? addressInfo.buildingName
-                                        : 'ABC Apartmanı'
-                                }
-                                address={fullAddress}
-                                updateDate="11/01/2023"
-                                qrCodeValue={
-                                    buildingCodeInput ? buildingCodeInput : 0
-                                }
-                            />
+                            <DocumentCard buildingInfo={buildingInfo} />
                         </Col>
                     </Row>
                 </Col>
