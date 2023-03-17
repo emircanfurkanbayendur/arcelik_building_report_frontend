@@ -12,7 +12,7 @@ const addressToString = (
     return `${neighbourhood}, ${street}, ${buildingName} ${district}/${city}`;
 };
 
-const DocumentCard = ({ buildingInfo }) => {
+const DocumentCard = ({ buildingInfo, setModalShow }) => {
     console.log('props');
     console.log(buildingInfo);
     return (
@@ -70,7 +70,10 @@ const DocumentCard = ({ buildingInfo }) => {
                         </Col>
                         <Col sm={12}>
                             <Row>
-                                <Button variant="secondary">
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => setModalShow(true)}
+                                >
                                     Dokümanı Görüntüle
                                 </Button>
                             </Row>

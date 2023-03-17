@@ -245,12 +245,17 @@ const Form = () => {
                                                 setIsPending(false);
 
                                                 if (user) {
+                                                    console.log('8888888888');
+                                                    console.log(user);
                                                     localStorage.setItem(
                                                         'user',
                                                         JSON.stringify(user)
                                                     );
-                                                    localStorage.setItem("token",user.token);
-                                                    
+                                                    localStorage.setItem(
+                                                        'token',
+                                                        user.token
+                                                    );
+
                                                     window.location.replace(
                                                         '/admin'
                                                     );
