@@ -424,7 +424,7 @@ const DocumentInquiry = () => {
                     </Col>
                 </Row>
             </Container>
-
+ 
             <ShowDocumentModal
                 buildingInfo={buildingInfo}
                 show={modalShow}

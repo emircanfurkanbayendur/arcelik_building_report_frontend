@@ -24,6 +24,7 @@ import Admin from './Pages/Admin/Admin';
 import CreateBuild from './Pages/Admin/CreateBuild/CreateBuild';
 import Profile from './Pages/Profile/Profile';
 import Update from './Pages/Profile/Update';
+import Documentinfo from './Pages/DocumentInquiry/documentİnfo';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
@@ -34,6 +35,7 @@ root.render(
             <BrowserRouter>
                 <NavigationBar />
                 <Routes>
+                <Route path="/" element={<HomePage />} />
                     <Route path="HomePage" element={<HomePage />} />
                     <Route path="auth" element={<Auth />} />
                     <Route
@@ -48,6 +50,7 @@ root.render(
                     <Route path="project" element={<Project />} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="update" element={<Update />} />
+                    <Route path="documnet" element={<Documentinfo />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>

@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import { Row, Col, Button } from 'react-bootstrap';
 import QRCode from 'react-qr-code';
-
+import { useNavigate } from 'react-router-dom';
 const addressToString = (
     neighbourhood,
     street,
@@ -13,6 +13,11 @@ const addressToString = (
 };
 
 const DocumentCard = ({ buildingInfo, setModalShow }) => {
+    const navigate = useNavigate();
+    const click= () =>
+    {
+navigate("/documnet",{state:{id:buildingInfo.documents}});
+    }
     console.log('props');
     console.log(buildingInfo);
     return (
@@ -80,6 +85,16 @@ const DocumentCard = ({ buildingInfo, setModalShow }) => {
                                     onClick={() => setModalShow(true)}
                                 >
                                     Dokümanı Görüntüle
+                                </Button>
+                            </Row>
+                        </Col>
+                        <Col sm={12}>
+                            <Row>
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => click()}
+                                >
+                                    Dokümanı Görüntüle 2
                                 </Button>
                             </Row>
                         </Col>
