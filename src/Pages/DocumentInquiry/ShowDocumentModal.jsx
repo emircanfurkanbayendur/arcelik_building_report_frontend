@@ -1,3 +1,4 @@
+import { Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -15,29 +16,21 @@ const ShowDocumentModal = (props) => {
                     {name}
                 </Modal.Title>
             </Modal.Header>
-            {documents.forEach((document, index) => {
-                console.log('document');
-                console.log(document);
 
-                const src = 'data:application/pdf;base64,' + document.report;
-                return (
-                    <>
-                        {document.uploadedByUserId}
-                        <iframe
-                            key={index}
-                            src={src}
-                            width="500px"
-                            height="500px"
-                        />
-                    </>
-                );
-            })}
+            <iframe
+                src={'data:application/pdf;base64,' + documents[0].report}
+                width="100%"
+                height={600}
+            />
+
             <Modal.Footer>
                 Güncellenme Tarihi:{' '}
                 {documents[documents.length - 1]?.uploadedAt}
             </Modal.Footer>
             <Modal.Footer>
-                <Button onClick={props.onHide}>Kapat</Button>
+                <Button variant="secondary" onClick={props.onHide}>
+                    Kapat
+                </Button>
             </Modal.Footer>
         </Modal>
     );

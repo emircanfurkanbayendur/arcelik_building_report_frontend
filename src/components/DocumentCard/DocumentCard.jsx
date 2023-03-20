@@ -29,7 +29,12 @@ const DocumentCard = ({ buildingInfo, setModalShow }) => {
                             Yapı Kodu: {buildingInfo.code}
                         </Card.Subtitle>
                         <Card.Subtitle className="mb-1 text-muted">
-                            Güncellenme Tarihi: {'yar'}
+                            Güncellenme Tarihi:{' '}
+                            {buildingInfo.id > 0
+                                ? buildingInfo.documents[
+                                      buildingInfo.documents.length - 1
+                                  ].uploadedAt
+                                : ''}
                         </Card.Subtitle>
                     </Col>
                     <Col sm={4}>
