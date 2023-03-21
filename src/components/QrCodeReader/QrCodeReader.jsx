@@ -16,8 +16,7 @@ const QrCodeReader = ({ buildingCodeInput, setBuildingCodeInput }) => {
                                 setData(result.text);
                                 setBuildingCodeInput(result.text);
                                 console.log(result.text);
-                                var x = getDocument(result.text);
-                                console.log(x);
+                                
                             }, 100);
                         }
 
