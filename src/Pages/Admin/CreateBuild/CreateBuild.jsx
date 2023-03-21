@@ -117,138 +117,99 @@ const CreateBuild = () => {
                                         </Row>
 
                                         <Row className="mb-3">
-                                            <Col sm={12} md={12} lg={6}>
-                                                <Autocomplete
+
+                                            <Col>
+                                        <TextField
                                                     size="small"
+                                                    fullWidth
+                                                    name="cityName"
                                                     onBlur={handleBlur}
                                                     onChange={handleChange}
+                                                    value={values.cityName}
+                                                    label="Şehir"
                                                     error={
                                                         Boolean(
                                                             touched.cityName
                                                         ) &&
-                                                        Boolean(errors.cityName)
+                                                        Boolean(
+                                                            errors.cityName
+                                                        )
                                                     }
                                                     helperText={
                                                         touched.cityName &&
                                                         errors.cityName
                                                     }
-                                                    disablePortal
-                                                    id="combo-box-cities"
-                                                    options={cities}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            name="cityName"
-                                                            value={
-                                                                values.cityName
-                                                            }
-                                                            {...params}
-                                                            label="İl"
-                                                        />
-                                                    )}
                                                 />
                                             </Col>
-                                            <Col sm={12} md={12} lg={6}>
-                                                <Autocomplete
+                                            <Col>
+                                        <TextField
                                                     size="small"
-                                                    disablePortal
-                                                    id="combo-box-counties"
-                                                    options={counties}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            name="countyName"
-                                                            onBlur={handleBlur}
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                            value={
-                                                                values.countyName
-                                                            }
-                                                            {...params}
-                                                            label="İlçe"
-                                                            error={
-                                                                Boolean(
-                                                                    touched.countyName
-                                                                ) &&
-                                                                Boolean(
-                                                                    errors.countyName
-                                                                )
-                                                            }
-                                                            helperText={
-                                                                touched.countyName &&
-                                                                errors.countyName
-                                                            }
-                                                        />
-                                                    )}
+                                                    fullWidth
+                                                    name="countyName"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    value={values.countyName}
+                                                    label="İlçe"
+                                                    error={
+                                                        Boolean(
+                                                            touched.countyName
+                                                        ) &&
+                                                        Boolean(
+                                                            errors.countyName
+                                                        )
+                                                    }
+                                                    helperText={
+                                                        touched.countyName &&
+                                                        errors.countyName
+                                                    }
                                                 />
                                             </Col>
                                         </Row>
                                         <Row className="mb-3">
-                                            <Col sm={12} md={12} lg={6}>
-                                                <Autocomplete
+                                        <Col>
+                                        <TextField
                                                     size="small"
-                                                    disablePortal
-                                                    id="combo-box-neighbourhoods"
-                                                    options={neighbourhoods}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            name="neighbourhoodName"
-                                                            onBlur={handleBlur}
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                            value={
-                                                                values.neighbourhoodName
-                                                            }
-                                                            {...params}
-                                                            label="Mahalle"
-                                                            error={
-                                                                Boolean(
-                                                                    touched.neighbourhoodName
-                                                                ) &&
-                                                                Boolean(
-                                                                    errors.neighbourhoodName
-                                                                )
-                                                            }
-                                                            helperText={
-                                                                touched.neighbourhoodName &&
-                                                                errors.neighbourhoodName
-                                                            }
-                                                        />
-                                                    )}
+                                                    fullWidth
+                                                    name="neighbourhoodName"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    value={values.neighbourhoodName}
+                                                    label="Mahalle"
+                                                    error={
+                                                        Boolean(
+                                                            touched.neighbourhoodName
+                                                        ) &&
+                                                        Boolean(
+                                                            errors.neighbourhoodName
+                                                        )
+                                                    }
+                                                    helperText={
+                                                        touched.neighbourhoodName &&
+                                                        errors.neighbourhoodName
+                                                    }
                                                 />
                                             </Col>
-                                            <Col sm={12} md={12} lg={6}>
-                                                <Autocomplete
+                                            <Col>
+                                        <TextField
                                                     size="small"
-                                                    disablePortal
-                                                    id="combo-box-streets"
-                                                    options={streets}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            name="streetName"
-                                                            onBlur={handleBlur}
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                            value={
-                                                                values.streetName
-                                                            }
-                                                            {...params}
-                                                            label="Sokak"
-                                                            error={
-                                                                Boolean(
-                                                                    touched.streetName
-                                                                ) &&
-                                                                Boolean(
-                                                                    errors.streetName
-                                                                )
-                                                            }
-                                                            helperText={
-                                                                touched.streetName &&
-                                                                errors.streetName
-                                                            }
-                                                        />
-                                                    )}
+                                                    fullWidth
+                                                    name="streetName"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    value={values.streetName}
+                                                    label="Sokak"
+                                                    error={
+                                                        Boolean(
+                                                            touched.streetName
+                                                        ) &&
+                                                        Boolean(
+                                                            errors.streetName
+                                                        )
+                                                    }
+                                                    helperText={
+                                                        touched.streetName &&
+                                                        errors.streetName
+                                                    }
                                                 />
                                             </Col>
                                         </Row>
