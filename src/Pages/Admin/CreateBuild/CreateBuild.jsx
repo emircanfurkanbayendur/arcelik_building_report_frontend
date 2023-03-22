@@ -365,11 +365,11 @@ const CreateBuild = () => {
                                                 disabled={
                                                     isPending ? true : false
                                                 }
-                                                onClick={async () => {
+                                                /*onClick={async () => {
                                                     setIsPending(true);
                                                     handleFormSubmit(values);
                                                     setIsPending(false);
-                                                }}
+                                                }}*/
                                             >
                                                 {!isPending && 'Kaydet'}
                                                 {isPending && (

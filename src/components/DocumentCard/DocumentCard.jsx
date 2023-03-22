@@ -16,7 +16,7 @@ const DocumentCard = ({ buildingInfo, setModalShow }) => {
     const navigate = useNavigate();
     const click= () =>
     {
-navigate("/documnet",{state:{id:buildingInfo.documents}});
+navigate(`/documnet/${buildingInfo.code}`);
     }
     console.log('props');
     console.log(buildingInfo);
