@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
-import { TextField, Autocomplete } from '@mui/material';
+import {
+    TextField,
+    Autocomplete,
+    Select,
+    OutlinedInput,
+    MenuItem,
+    InputLabel,
+    FormControl,
+} from '@mui/material';
 import { Formik } from 'formik';
 import { formSchema } from './formSchema';
-import cities from '../../DocumentInquiry/cities';
-import counties from '../../DocumentInquiry/counties';
-import neighbourhoods from '../../DocumentInquiry/neighbourhoods';
-import streets from '../../DocumentInquiry/streets';
 import PopupModal from './PopupModal';
 import DragDrop from '../../../components/DragDrop/DragDrop';
 import { postBuilding } from '../../../api/building';
 import { postDocument } from '../../../api/document';
 
+import cities from '../../../db/cities';
+import counties from '../../../db/counties';
+import villages from '../../../db/villages';
+import neighbourhoods from '../../../db/neighbourhoods';
+import streets from '../../../db/streets';
+
 const initialValues = {
-    cityName: '',
-    countyName: '',
+    cityName: 'ADANA',
+    countyName: 'SEYHAN',
     neighbourhoodName: '',
     streetName: '',
     buildingCode: '',
@@ -37,6 +47,11 @@ const getBase64 = (file) => {
 const CreateBuild = () => {
     const [modalShow, setModalShow] = useState(false);
     const [documentToUpload, setDocumentToUpload] = useState(null);
+    const [selectBoxValues, setSelectBoxValues] = useState({
+        city: '',
+        county: '',
+        neighbourhood: '',
+    });
     const [isPending, setIsPending] = useState(false);
 
     const fileTypes = ['PDF'];
@@ -117,63 +132,103 @@ const CreateBuild = () => {
                                         </Row>
 
                                         <Row className="mb-3">
-
                                             <Col>
-                                        <TextField
-                                                    size="small"
-                                                    fullWidth
-                                                    name="cityName"
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    value={values.cityName}
-                                                    label="Şehir"
-                                                    error={
-                                                        Boolean(
-                                                            touched.cityName
-                                                        ) &&
-                                                        Boolean(
-                                                            errors.cityName
-                                                        )
-                                                    }
-                                                    helperText={
-                                                        touched.cityName &&
-                                                        errors.cityName
-                                                    }
-                                                />
+                                                <FormControl
+                                                    sx={{ width: '100%' }}
+                                                >
+                                                    <InputLabel id="demo-multiple-name-label">
+                                                        İl
+                                                    </InputLabel>
+                                                    <Select
+                                                        name="cityName"
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        input={
+                                                            <OutlinedInput label="İl" />
+                                                        }
+                                                        value={values.cityName}
+                                                        onChange={handleChange}
+                                                    >
+                                                        {cities.map((city) => {
+                                                            return (
+                                                                <MenuItem
+                                                                    key={
+                                                                        city.Name
+                                                                    }
+                                                                    value={
+                                                                        city.Name
+                                                                    }
+                                                                >
+                                                                    {city.Name}
+                                                                </MenuItem>
+                                                            );
+                                                        })}
+                                                    </Select>
+                                                </FormControl>
                                             </Col>
                                             <Col>
-                                        <TextField
-                                                    size="small"
-                                                    fullWidth
-                                                    name="countyName"
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    value={values.countyName}
-                                                    label="İlçe"
-                                                    error={
-                                                        Boolean(
-                                                            touched.countyName
-                                                        ) &&
-                                                        Boolean(
-                                                            errors.countyName
-                                                        )
-                                                    }
-                                                    helperText={
-                                                        touched.countyName &&
-                                                        errors.countyName
-                                                    }
-                                                />
+                                                <FormControl
+                                                    sx={{ width: '100%' }}
+                                                >
+                                                    <InputLabel id="demo-multiple-name-label">
+                                                        İlçe
+                                                    </InputLabel>
+                                                    <Select
+                                                        name="countyName"
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        input={
+                                                            <OutlinedInput label="İlçe" />
+                                                        }
+                                                        value={
+                                                            values.countyName
+                                                        }
+                                                        onChange={handleChange}
+                                                    >
+                                                        {counties.map(
+                                                            (county) => {
+                                                                if (
+                                                                    county.CityId ==
+                                                                    cities.find(
+                                                                        (
+                                                                            city
+                                                                        ) =>
+                                                                            city.Name ==
+                                                                            values.cityName
+                                                                    ).Id
+                                                                ) {
+                                                                    return (
+                                                                        <MenuItem
+                                                                            key={
+                                                                                county.Name
+                                                                            }
+                                                                            value={
+                                                                                county.Name
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                county.Name
+                                                                            }
+                                                                        </MenuItem>
+                                                                    );
+                                                                }
+                                                            }
+                                                        )}
+                                                    </Select>
+                                                </FormControl>
                                             </Col>
                                         </Row>
                                         <Row className="mb-3">
-                                        <Col>
-                                        <TextField
+                                            <Col>
+                                                <TextField
                                                     size="small"
                                                     fullWidth
                                                     name="neighbourhoodName"
                                                     onBlur={handleBlur}
                                                     onChange={handleChange}
-                                                    value={values.neighbourhoodName}
+                                                    value={
+                                                        values.neighbourhoodName
+                                                    }
                                                     label="Mahalle"
                                                     error={
                                                         Boolean(
@@ -190,7 +245,7 @@ const CreateBuild = () => {
                                                 />
                                             </Col>
                                             <Col>
-                                        <TextField
+                                                <TextField
                                                     size="small"
                                                     fullWidth
                                                     name="streetName"

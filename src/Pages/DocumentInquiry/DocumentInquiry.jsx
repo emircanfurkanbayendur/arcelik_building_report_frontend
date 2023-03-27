@@ -15,11 +15,12 @@ import DocumentCard from '../../components/DocumentCard/DocumentCard';
 import QrCodeReader from '../../components/QrCodeReader/QrCodeReader';
 import QrScanner from 'qr-scanner';
 
-import cities from './cities';
-import counties from './counties';
-import neighbourhoods from './neighbourhoods';
-import streets from './streets';
-import buildings from './buildings';
+import cities from '../../db/cities';
+import counties from '../../db/counties';
+import villages from '../../db/villages';
+import neighbourhoods from '../../db/neighbourhoods';
+import streets from '../../db/streets';
+
 import { getBuildingByCode } from '../../api/building';
 import ShowDocumentModal from './ShowDocumentModal';
 
@@ -245,9 +246,9 @@ const DocumentInquiry = () => {
                                                             <Autocomplete
                                                                 disablePortal
                                                                 id="combo-box-buildings"
-                                                                options={
-                                                                    buildings
-                                                                }
+                                                                // options={
+
+                                                                // }
                                                                 sx={{
                                                                     width: '100%',
                                                                 }}
@@ -424,7 +425,7 @@ const DocumentInquiry = () => {
                     </Col>
                 </Row>
             </Container>
- 
+
             <ShowDocumentModal
                 buildingInfo={buildingInfo}
                 show={modalShow}

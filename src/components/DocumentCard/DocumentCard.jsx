@@ -14,10 +14,9 @@ const addressToString = (
 
 const DocumentCard = ({ buildingInfo, setModalShow }) => {
     const navigate = useNavigate();
-    const click= () =>
-    {
-navigate(`/documnet/${buildingInfo.code}`);
-    }
+    const click = () => {
+        navigate(`/documnet/${buildingInfo.code}`);
+    };
     console.log('props');
     console.log(buildingInfo);
     return (
