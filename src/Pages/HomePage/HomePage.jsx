@@ -1,17 +1,40 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 //import { Map } from '../../components/Map/Map';
 import MapPicker from "react-google-map-picker";
-const DefaultLocation = { lat:  41.01, lng: 28.95 };
+import {getCount} from '../../api/building';
 const DefaultZoom = 10;
-function HomePage() {
-  const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
+const HomePage = () => {
+  const DefaultLocation = { lat:  41.01, lng: 28.95 };
 
+  const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
   const [location, setLocation] = useState(defaultLocation);
   const [zoom, setZoom] = useState(DefaultZoom);
   function handleChangeLocation(lat, lng) {
     setLocation({ lat: lat, lng: lng });
   }
+  const [buildingInfo, setBuildingInfo] = useState({
+       
+    documents: {}
+ 
+});
+
+useEffect(() => {
+  // declare the data fetching function
+  const fetchData = async () => {
+      const building = await  getCount();
+      await setBuildingInfo(building);
+
+      console.log('building');
+      console.log(building.cityCount);
+      setBuildingInfo(building);
+  }
+
+  // call the function
+  fetchData()
+    // make sure to catch any error
+    .catch(console.error);
+}, [])
 
   function handleChangeZoom(newZoom) {
     setZoom(newZoom);
@@ -36,7 +59,7 @@ function HomePage() {
                 className=""
               >
                 <Card.Body>
-                  <Card.Title> Sistemde Bulunan İlçe Sayısı: 15 </Card.Title>
+                  <Card.Title> Sistemde Bulunan İl Sayısı: {buildingInfo.cityCount} </Card.Title>
                 </Card.Body>
               </Card>
             </Row>
@@ -51,7 +74,7 @@ function HomePage() {
                 className=""
               >
                 <Card.Body>
-                  <Card.Title> Sistemde Bulunan Bina Sayısı: 15 </Card.Title>
+                  <Card.Title> Sistemde Bulunan İlçe Sayısı: {buildingInfo.districtCount} </Card.Title>
                 </Card.Body>
               </Card>
             </Row>
@@ -66,7 +89,7 @@ function HomePage() {
                 className="mb-5 mt-2 mx-2"
               >
                 <Card.Body>
-                  <Card.Title> Sistemde Bulunan Rapor Sayısı: 15 </Card.Title>
+                  <Card.Title> Sistemde Bulunan Mahalle Sayısı: {buildingInfo.neighbourhoodCount} </Card.Title>
                 </Card.Body>
               </Card>
             </Row>
@@ -81,7 +104,7 @@ function HomePage() {
                 className="mb-5 mt-2 mx-2"
               >
                 <Card.Body>
-                  <Card.Title> Sistemde Bulunan Rapor Sayısı: 15 </Card.Title>
+                  <Card.Title> Sistemde Bulunan Bina Sayısı: {buildingInfo.buildingCount} </Card.Title>
                 </Card.Body>
               </Card>
             </Row>

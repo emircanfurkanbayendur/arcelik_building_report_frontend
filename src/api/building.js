@@ -58,3 +58,15 @@ export const getBuildingByCode = async (buildingCode) => {
 
     return await resultData;
 };
+
+export const getCount = async () => {
+    var resultData;
+
+    await axios
+        .get(`${BUILDING_ENDPOINT_URL}/count/`)
+        .then(async (result) => {
+            resultData = await result.data;
+        });
+
+    return await resultData;
+};
