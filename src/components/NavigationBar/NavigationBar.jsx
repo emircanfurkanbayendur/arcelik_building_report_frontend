@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import {useNavigate} from "react-router-dom"
 import {Button} from '@mui/material';
+import PeoplesIcon from '@rsuite/icons/Peoples';
 const linkStyle = {
     textDecoration: 'none',
     color: '#000',
@@ -71,7 +72,20 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                                         İletişim
                                     </Link>
                                 </Nav.Item>
+                             
                             </Nav.Menu>
+                            {localStorage.getItem("user")==null
+                                                ? ''
+                                                :JSON.parse(
+                                                    localStorage.getItem('user')
+                                                ).roleId=="1" 
+                                                ? <Nav.Item eventKey="7"  icon={<PeoplesIcon />}>
+                                    <Link to="/users" className='disabled-link' style={linkStyle}>
+                                      Kişiler
+                                    </Link>
+                                </Nav.Item>
+                                                :''}
+                               
                         </Nav>
                     </Col>
                     <Col>

@@ -17,6 +17,7 @@ import Information from './Pages/Information/Information';
 import Project from './Pages/Project/Project';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import Footer from './components/Footer/Footer';
+import Users from './Pages/Users/Users';
 import DocumentInquiry from './Pages/DocumentInquiry/DocumentInquiry';
 import Home from './Pages/HomePage/HomePage';
 import HomePage from './Pages/HomePage/HomePage';
@@ -27,7 +28,7 @@ import Update from './Pages/Profile/Update';
 import Documentinfo from './Pages/DocumentInquiry/documentİnfo';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
+    
         <ThemeProvider
             breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
             minBreakpoint="xxs"
@@ -51,11 +52,12 @@ root.render(
                     <Route path="profile" element={<Profile />} />
                     <Route path="update" element={<Update />} />
                     <Route path="/documnet/:id" element={<Documentinfo />} />
+                    <Route path="/users" element={<Users />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>
         </ThemeProvider>
-    </React.StrictMode>
+    
 );
 
 // If you want to start measuring performance in your app, pass a function

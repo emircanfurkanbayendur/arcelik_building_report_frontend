@@ -1,5 +1,23 @@
 import axios from 'axios';
 
+export const getUsers = ()  => {
+    var resultData;
+    let config = {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+    };
+    const url = `${process.env.REACT_APP_BASE_URL}/api/User`;
+     axios.get(url,config).then(async (result) => {
+        //resultData = await result.data;
+        localStorage.setItem("users",JSON.stringify(result.data));
+        
+      // console.log(JSON.stringify(result.data[0]));
+        
+    });
+
+    return  resultData;
+};
 
 export const updateUser = async ({
     id,
