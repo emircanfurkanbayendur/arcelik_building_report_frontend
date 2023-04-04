@@ -103,8 +103,8 @@ const CreateBuild = () => {
         <Container
             style={{
                 minHeight: window.visualViewport.height - 100,
-                maxWidth: '65%',
             }}
+            fluid
         >
             <Row>
                 <Card>

@@ -15,7 +15,7 @@ const addressToString = (
 const DocumentCard = ({ buildingInfo, setModalShow }) => {
     const navigate = useNavigate();
     const click = () => {
-        navigate(`/documnet/${buildingInfo.code}`);
+        navigate(`/document/${buildingInfo.code}`);
     };
     console.log('props');
     console.log(buildingInfo);
@@ -23,35 +23,56 @@ const DocumentCard = ({ buildingInfo, setModalShow }) => {
         <Card style={{ width: '100%' }}>
             <Card.Body>
                 <Row className="align-items-center">
-                    <Col sm={8}>
+                    <Col
+                        sm={buildingInfo.id > 0 ? 8 : 12}
+                        className={
+                            buildingInfo.id <= 0
+                                ? 'd-flex justify-content-center'
+                                : null
+                        }
+                    >
                         <Card.Title>
                             {buildingInfo.id > 0
                                 ? buildingInfo.name
                                 : 'Lütfen geçerli bilgi giriniz'}
                         </Card.Title>
-                        <Card.Subtitle className="mb-1 text-muted">
-                            Yapı Kodu: {buildingInfo.code}
-                        </Card.Subtitle>
-                        <Card.Subtitle className="mb-1 text-muted">
-                            Güncellenme Tarihi:{' '}
-                            {buildingInfo.id > 0
-                                ? buildingInfo.documents[
-                                      buildingInfo.documents.length - 1
-                                  ].uploadedAt
-                                : ''}
-                        </Card.Subtitle>
+                        {buildingInfo.id > 0 && (
+                            <>
+                                <Card.Subtitle className="mb-1 text-muted">
+                                    Yapı Kodu: {buildingInfo.code}
+                                </Card.Subtitle>
+                                <Card.Subtitle className="mb-1 text-muted">
+                                    Güncellenme Tarihi:{' '}
+                                    {buildingInfo.id > 0
+                                        ? buildingInfo.documents[
+                                              buildingInfo.documents.length - 1
+                                          ].uploadedAt
+                                        : ''}
+                                </Card.Subtitle>
+                            </>
+                        )}
                     </Col>
-                    <Col sm={4}>
-                        <QRCode
-                            size={256}
-                            style={{
-                                height: 'auto',
-                                maxWidth: '100%',
-                                width: '100%',
-                            }}
-                            value={String(buildingInfo.code)}
-                        />
-                    </Col>
+
+                    {buildingInfo.id > 0 && (
+                        <>
+                            <Row className="my-2 d-sm-block d-lg-none"></Row>
+
+                            <Col
+                                sm={4}
+                                className="d-flex justify-content-center"
+                            >
+                                <QRCode
+                                    size={256}
+                                    style={{
+                                        height: 'auto',
+                                        maxWidth: '60%',
+                                    }}
+                                    value={String(buildingInfo.code)}
+                                />
+                            </Col>
+                            <Row className="my-2 d-sm-block d-lg-none"></Row>
+                        </>
+                    )}
                 </Row>
 
                 {buildingInfo.id > 0 && (
@@ -88,7 +109,7 @@ const DocumentCard = ({ buildingInfo, setModalShow }) => {
                             </Row>
                         </Col>
                         <Col sm={12}>
-                            <Row>
+                            <Row className="mt-1">
                                 <Button
                                     variant="secondary"
                                     onClick={() => click()}

@@ -142,7 +142,7 @@ const DocumentInquiry = () => {
                                             <Card>
                                                 <Card.Body>
                                                     <Row>
-                                                        <Col sm={6}>
+                                                        <Col sm={6} md={12}>
                                                             <Autocomplete
                                                                 disablePortal
                                                                 id="combo-box-cities"
@@ -164,7 +164,9 @@ const DocumentInquiry = () => {
                                                                 )}
                                                             />
                                                         </Col>
-                                                        <Col sm={6}>
+                                                        <Row className="my-1 d-sm-block"></Row>
+
+                                                        <Col sm={6} md={12}>
                                                             <Autocomplete
                                                                 disablePortal
                                                                 id="combo-box-counties"
@@ -413,6 +415,7 @@ const DocumentInquiry = () => {
                                         Sorgula
                                     </Button>
                                 </Row>
+                                <Row className="my-2 d-sm-block d-lg-none"></Row>
                             </Col>
 
                             <Col sm={6}>

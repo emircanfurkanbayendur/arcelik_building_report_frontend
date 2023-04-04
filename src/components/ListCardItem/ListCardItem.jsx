@@ -71,17 +71,20 @@ const ListCardItem = () => {
                             Güncellenme Tarihi: {buildingInfo.updatedAt}
                         </Card.Subtitle>
                     </Col>
-                    <Col sm={2}>
+                    <Row className="my-2 d-sm-block d-lg-none"></Row>
+
+                    <Col sm={2} className="d-flex justify-content-center">
                         <QRCode
                             size={256}
                             style={{
                                 height: 'auto',
-                                maxWidth: '100%',
-                                width: '100%',
+                                maxWidth: '60%',
                             }}
                             value={buildingInfo.code}
                         />
                     </Col>
+                    <Row className="my-2 d-sm-block d-lg-none"></Row>
+
                     <Col sm={1}></Col>
                 </Row>
                 <Row>

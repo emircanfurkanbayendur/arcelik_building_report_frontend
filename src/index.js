@@ -28,36 +28,31 @@ import Update from './Pages/Profile/Update';
 import Documentinfo from './Pages/DocumentInquiry/documentİnfo';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    
-        <ThemeProvider
-            breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
-            minBreakpoint="xxs"
-        >
-            <BrowserRouter>
-                <NavigationBar />
-                <Routes>
+    <ThemeProvider
+        breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+        minBreakpoint="xxs"
+    >
+        <BrowserRouter>
+            <NavigationBar />
+            <Routes>
                 <Route path="/" element={<HomePage />} />
-                    <Route path="HomePage" element={<HomePage />} />
-                    <Route path="auth" element={<Auth />} />
-                    <Route
-                        path="documentinquiry"
-                        element={<DocumentInquiry />}
-                    />
-                    <Route path="admin" element={<Admin />}>
-                        <Route path="createbuild" element={<CreateBuild />} />
-                    </Route>
-                    <Route path="team" element={<Team />} />
-                    <Route path="information" element={<Information />} />
-                    <Route path="project" element={<Project />} />
-                    <Route path="profile" element={<Profile />} />
-                    <Route path="update" element={<Update />} />
-                    <Route path="/documnet/:id" element={<Documentinfo />} />
-                    <Route path="/users" element={<Users />} />
-                </Routes>
-                <Footer />
-            </BrowserRouter>
-        </ThemeProvider>
-    
+                <Route path="HomePage" element={<HomePage />} />
+                <Route path="auth" element={<Auth />} />
+                <Route path="documentinquiry" element={<DocumentInquiry />} />
+                <Route path="admin" element={<Admin />}>
+                    <Route path="createbuild" element={<CreateBuild />} />
+                </Route>
+                <Route path="team" element={<Team />} />
+                <Route path="information" element={<Information />} />
+                <Route path="project" element={<Project />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="update" element={<Update />} />
+                <Route path="/document/:id" element={<Documentinfo />} />
+                <Route path="/users" element={<Users />} />
+            </Routes>
+            <Footer />
+        </BrowserRouter>
+    </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -9,7 +9,7 @@ const ListBuilds = () => {
         <Container
             style={{
                 minHeight: window.visualViewport.height - 100,
-                maxWidth: '60%',
+                maxWidth: '100%',
             }}
         >
             {testBuildingArr.map((item, index) => (
