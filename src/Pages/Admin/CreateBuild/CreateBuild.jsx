@@ -25,7 +25,7 @@ import streets from '../../../db/streets';
 const initialValues = {
     cityName: 'ADANA',
     countyName: 'SEYHAN',
-    neighbourhoodName: '',
+    neighbourhoodName: 'AHMET REMZİ YÜREĞİR',
     streetName: '',
     buildingCode: '',
     buildingName: '',
@@ -58,6 +58,8 @@ const CreateBuild = () => {
     let utf8Encode = new TextEncoder();
 
     const handleFormSubmit = async (values) => {
+        setIsPending(true);
+
         const { createdByUserId, id } = await postBuilding({
             name: values.buildingName,
             city: values.cityName,
@@ -78,6 +80,8 @@ const CreateBuild = () => {
             uploadedByUserId: createdByUserId,
             buildingId: id,
         });
+
+        setIsPending(false);
     };
 
     const handleClick = (setFieldValue) => {
@@ -132,7 +136,7 @@ const CreateBuild = () => {
                                         </Row>
 
                                         <Row className="mb-3">
-                                            <Col>
+                                            <Col sm={12} md={12} lg={6}>
                                                 <FormControl
                                                     sx={{ width: '100%' }}
                                                 >
@@ -166,7 +170,8 @@ const CreateBuild = () => {
                                                     </Select>
                                                 </FormControl>
                                             </Col>
-                                            <Col>
+                                            <Row className="my-1 d-sm-block d-lg-none"></Row>
+                                            <Col sm={12} md={12} lg={6}>
                                                 <FormControl
                                                     sx={{ width: '100%' }}
                                                 >
@@ -219,34 +224,80 @@ const CreateBuild = () => {
                                             </Col>
                                         </Row>
                                         <Row className="mb-3">
-                                            <Col>
-                                                <TextField
-                                                    size="small"
-                                                    fullWidth
-                                                    name="neighbourhoodName"
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    value={
-                                                        values.neighbourhoodName
-                                                    }
-                                                    label="Mahalle"
-                                                    error={
-                                                        Boolean(
-                                                            touched.neighbourhoodName
-                                                        ) &&
-                                                        Boolean(
-                                                            errors.neighbourhoodName
-                                                        )
-                                                    }
-                                                    helperText={
-                                                        touched.neighbourhoodName &&
-                                                        errors.neighbourhoodName
-                                                    }
-                                                />
+                                            <Col sm={12} md={12} lg={6}>
+                                                <FormControl
+                                                    sx={{ width: '100%' }}
+                                                >
+                                                    <InputLabel id="demo-multiple-name-label">
+                                                        Mahalle
+                                                    </InputLabel>
+                                                    <Select
+                                                        name="neighbourhoodName"
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        input={
+                                                            <OutlinedInput label="Mahalle" />
+                                                        }
+                                                        value={
+                                                            values.neighbourhoodName
+                                                        }
+                                                        onChange={handleChange}
+                                                    >
+                                                        {villages.map(
+                                                            (village) => {
+                                                                if (
+                                                                    village.DistrictId ==
+                                                                    counties.find(
+                                                                        (
+                                                                            county
+                                                                        ) =>
+                                                                            county.Name ==
+                                                                            values.countyName
+                                                                    ).Id
+                                                                ) {
+                                                                    var selectedVillage =
+                                                                        village;
+                                                                    {
+                                                                        console.log(
+                                                                            selectedVillage
+                                                                        );
+                                                                    }
+                                                                    return neighbourhoods.map(
+                                                                        (
+                                                                            neighbourhood
+                                                                        ) => {
+                                                                            if (
+                                                                                neighbourhood.VillageId ==
+                                                                                selectedVillage.Id
+                                                                            ) {
+                                                                                return (
+                                                                                    <MenuItem
+                                                                                        key={
+                                                                                            neighbourhood.Name
+                                                                                        }
+                                                                                        value={
+                                                                                            neighbourhood.Name
+                                                                                        }
+                                                                                    >
+                                                                                        {
+                                                                                            neighbourhood.Name
+                                                                                        }
+                                                                                    </MenuItem>
+                                                                                );
+                                                                            }
+                                                                        }
+                                                                    );
+                                                                }
+                                                            }
+                                                        )}
+                                                    </Select>
+                                                </FormControl>
                                             </Col>
-                                            <Col>
+                                            <Row className="my-1 d-sm-block d-lg-none"></Row>
+
+                                            <Col sm={12} md={12} lg={6}>
                                                 <TextField
-                                                    size="small"
+                                                    size="large"
                                                     fullWidth
                                                     name="streetName"
                                                     onBlur={handleBlur}
@@ -292,6 +343,8 @@ const CreateBuild = () => {
                                                     }
                                                 />
                                             </Col>
+                                            <Row className="my-1 d-sm-block d-lg-none"></Row>
+
                                             <Col sm={12} md={12} lg={6}>
                                                 <TextField
                                                     size="small"
@@ -317,7 +370,7 @@ const CreateBuild = () => {
                                             </Col>
                                         </Row>
                                         <Row className="mb-3">
-                                            <Col sm={6} md={6} lg={3}>
+                                            <Col sm={12} md={12} lg={3}>
                                                 <TextField
                                                     size="small"
                                                     fullWidth
@@ -338,7 +391,9 @@ const CreateBuild = () => {
                                                     }
                                                 />
                                             </Col>
-                                            <Col sm={6} md={6} lg={3}>
+                                            <Row className="my-1 d-sm-block d-lg-none"></Row>
+
+                                            <Col sm={12} md={12} lg={3}>
                                                 <TextField
                                                     size="small"
                                                     fullWidth
@@ -361,9 +416,11 @@ const CreateBuild = () => {
                                                     }
                                                 />
                                             </Col>
+                                            <Row className="my-1 d-sm-block d-lg-none"></Row>
+
                                             <Col
-                                                sm={6}
-                                                md={6}
+                                                sm={12}
+                                                md={12}
                                                 lg={3}
                                                 className="d-grid"
                                             >
@@ -378,9 +435,11 @@ const CreateBuild = () => {
                                                     Konumunu Kullan
                                                 </Button>
                                             </Col>
+                                            <Row className="my-1 d-sm-block d-lg-none"></Row>
+
                                             <Col
-                                                sm={6}
-                                                md={6}
+                                                sm={12}
+                                                md={12}
                                                 lg={3}
                                                 className="d-grid"
                                             >
