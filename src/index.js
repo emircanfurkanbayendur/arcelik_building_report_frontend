@@ -51,7 +51,7 @@ root.render(
                     <Route path="project" element={<Project />} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="update" element={<Update />} />
-                    <Route path="/documnet/:id" element={<Documentinfo />} />
+                    <Route path="/document/:id" element={<Documentinfo />} />
                     <Route path="/users" element={<UsersMain />} />
                 </Routes>
                 <Footer />

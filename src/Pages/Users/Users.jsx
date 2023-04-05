@@ -10,34 +10,36 @@ const refresh = () => window.location.reload(true)
 
 const Users = () => {
     const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")))
-  
+    const [control,setControl] = useState("")
    const  updateRole = async (id) => {
 
    await  updateUserRole(id);
    
 
   }
-
-  useEffect(() => {
-
-    
-    getUsers();
-    setUsers(JSON.parse(localStorage.getItem("users")));
-   console.log(users)
-
-  },[users])
   
- 
+  useEffect( () => {
+setControl("12s")
+   getUsers();
+   setUsers(JSON.parse(localStorage.getItem("users")));
+
+
+
+                                                       
+  },[control])
+
+
 
 
     return (
 
 
       <div >
-        <Container
+        <Container 
           style={{
             minHeight: window.visualViewport.height - 100,
             maxWidth: '60%',
+            flex: 1
           }}
         >
           <br />
@@ -94,7 +96,7 @@ const Users = () => {
                     <Row>
                       <Col md={{ span: 4, offset: 12 }} style={{ fontSize: 20 }}>
                         {item.roleId!=1 ?
-                        <Button variant="danger" size="12" onClick={async () => await updateRole(item.id)}>
+                        <Button variant="danger" size="12" onClick={async () =>{ await updateRole(item.id); setControl("123"); console.log(control)}}>
                         Yetkilendir
                       </Button>:
                         ""}
