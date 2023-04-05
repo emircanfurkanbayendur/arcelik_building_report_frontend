@@ -3,7 +3,7 @@ import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCar
 import {Button } from '@mui/material';
 import {useNavigate} from "react-router-dom"
 import {useLocation} from 'react-router-dom';
-import updateUser from '../../api/updateuser';
+import updateUser from '../../api/user';
 
 
 

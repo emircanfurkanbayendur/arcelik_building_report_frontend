@@ -1,6 +1,7 @@
 import axios from 'axios';
-
+const refresh = () => window.location.reload(true)
 export const getUsers = ()  => {
+ 
     var resultData;
     let config = {
         headers: {
@@ -9,10 +10,37 @@ export const getUsers = ()  => {
     };
     const url = `${process.env.REACT_APP_BASE_URL}/api/User`;
      axios.get(url,config).then(async (result) => {
-        //resultData = await result.data;
+      
+      
+       
         localStorage.setItem("users",JSON.stringify(result.data));
+      console.log(localStorage.getItem("users"));
+   
+       
+ 
         
-      // console.log(JSON.stringify(result.data[0]));
+    });
+   
+    return  resultData;
+};
+export const updateUserRole =  (id)  => {
+    var resultData;
+    let config = {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+    };
+    const url = `${process.env.REACT_APP_BASE_URL}/api/User/changeRole/${id}`;
+     axios.put(url,id,config).then(async (result) => {
+        if(localStorage.getItem("users")!=null){
+          //  localStorage.removeItem("users");
+            getUsers();
+            refresh();
+           
+         }
+   
+        
+       
         
     });
 
@@ -39,7 +67,7 @@ export const updateUser = async ({
         
      
     };
-    const refresh = () => window.location.reload(true)
+   
 const url = `${process.env.REACT_APP_BASE_URL}/api/User`;
 
    await  axios.put(url, user,{ headers: {"Authorization" : ` Bearer ${localStorage.getItem("token")}`} }).then((result) => {
