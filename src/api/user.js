@@ -14,7 +14,7 @@ export const getUsers = ()  => {
       
        
         localStorage.setItem("users",JSON.stringify(result.data));
-      console.log(localStorage.getItem("users"));
+      //console.log(localStorage.getItem("users"));
    
        
  
@@ -35,7 +35,7 @@ export const updateUserRole =  (id)  => {
         if(localStorage.getItem("users")!=null){
           //  localStorage.removeItem("users");
             getUsers();
-            refresh();
+            
            
          }
    

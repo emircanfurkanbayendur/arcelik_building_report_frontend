@@ -9,7 +9,7 @@ import { Refresh } from '@mui/icons-material';
 const refresh = () => window.location.reload(true)
 
 const Users = () => {
-
+    const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")))
   
    const  updateRole = async (id) => {
 
@@ -22,9 +22,10 @@ const Users = () => {
 
     
     getUsers();
-   
+    setUsers(JSON.parse(localStorage.getItem("users")));
+   console.log(users)
 
-  },[])
+  },[users])
   
  
 
@@ -42,7 +43,7 @@ const Users = () => {
           <br />
 
 
-          {JSON.parse(localStorage.getItem("users")).map((item, index) => (
+          {users.map((item, index) => (
 
             <Row className="mt-1" key={index}>
               <br />
