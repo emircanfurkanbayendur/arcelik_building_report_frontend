@@ -2,6 +2,9 @@ import Card from 'react-bootstrap/Card';
 import { Row, Col, Button } from 'react-bootstrap';
 import QRCode from 'react-qr-code';
 import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import CryptoJS from 'crypto-js';
+
 const addressToString = (
     neighbourhood,
     street,
@@ -13,9 +16,17 @@ const addressToString = (
 };
 
 const DocumentCard = ({ buildingInfo, setModalShow }) => {
+    const [encrptedData, setEncrptedData] = useState('');
+
+    const secretPass = 'XkhZG4fW2t2W';
+
     const navigate = useNavigate();
     const click = () => {
-        navigate(`/document/${buildingInfo.code}`);
+        const data = CryptoJS.AES.encrypt(
+            JSON.stringify(buildingInfo.code),
+            secretPass
+        ).toString();
+        navigate(`/document/${data}`);
     };
     console.log('props');
     console.log(buildingInfo);

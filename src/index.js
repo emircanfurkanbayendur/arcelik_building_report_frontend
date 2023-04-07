@@ -17,7 +17,7 @@ import Information from './Pages/Information/Information';
 import Project from './Pages/Project/Project';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import Footer from './components/Footer/Footer';
-import Users from './Pages/Users/Users';
+import UsersMain from './Pages/Users/UsersMain';
 import DocumentInquiry from './Pages/DocumentInquiry/DocumentInquiry';
 import Home from './Pages/HomePage/HomePage';
 import HomePage from './Pages/HomePage/HomePage';
@@ -46,7 +46,7 @@ root.render(
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/update" element={<Update />} />
                 <Route path="/document/:id" element={<DocumentInfo />} />
-                <Route path="/users" element={<Users />} />
+                <Route path="/users" element={<UsersMain />} />
             </Routes>
             <Footer />
         </BrowserRouter>
