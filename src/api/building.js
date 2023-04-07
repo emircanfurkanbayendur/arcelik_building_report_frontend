@@ -72,9 +72,34 @@ export const getStreetsByAddress = async (city, district, neighbourhood) => {
         })
         .then(async (result) => {
             resultData = await result.data;
-            await console.log('resultData--------------------------------');
+            //await console.log('resultData--------------------------------');
+            //await console.log(resultData);
+        });
 
-            await console.log(resultData);
+    return await resultData;
+};
+
+export const getBuildingsByAddress = async (
+    city,
+    district,
+    neighbourhood,
+    street
+) => {
+    var resultData;
+
+    await axios
+        .get(`${BUILDING_ENDPOINT_URL}/buildingsByAdress`, {
+            params: {
+                city: city,
+                district: district,
+                neighbourhood: neighbourhood,
+                street: street,
+            },
+        })
+        .then(async (result) => {
+            resultData = await result.data;
+            //await console.log('resultData--------------------------------');
+            //await console.log(resultData);
         });
 
     return await resultData;

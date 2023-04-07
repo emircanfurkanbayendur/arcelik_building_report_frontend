@@ -23,6 +23,7 @@ import streets from '../../db/streets';
 
 import { getBuildingByCode } from '../../api/building';
 import ShowDocumentModal from './ShowDocumentModal';
+import SearchForm from './SearchForm';
 
 const DocumentInquiry = () => {
     const [modalShow, setModalShow] = useState(false);
@@ -59,10 +60,6 @@ const DocumentInquiry = () => {
         if (radioValue == '2' || radioValue == '3') {
             const building = await getBuildingByCode(buildingCodeInput);
             await setBuildingInfo(building);
-
-            console.log('building');
-            console.log(building);
-            console.log(buildingInfo);
         }
     };
 
@@ -139,139 +136,15 @@ const DocumentInquiry = () => {
                                 {radioValue === '1' && (
                                     <>
                                         <Row>
-                                            <Card>
-                                                <Card.Body>
-                                                    <Row>
-                                                        <Col sm={6} md={12}>
-                                                            <Autocomplete
-                                                                disablePortal
-                                                                id="combo-box-cities"
-                                                                options={cities}
-                                                                sx={{
-                                                                    width: '100%',
-                                                                }}
-                                                                renderInput={(
-                                                                    params
-                                                                ) => (
-                                                                    <TextField
-                                                                        name="cityName"
-                                                                        onSelect={
-                                                                            handleSelect
-                                                                        }
-                                                                        {...params}
-                                                                        label="İl"
-                                                                    />
-                                                                )}
-                                                            />
-                                                        </Col>
-                                                        <Row className="my-1 d-sm-block"></Row>
-
-                                                        <Col sm={6} md={12}>
-                                                            <Autocomplete
-                                                                disablePortal
-                                                                id="combo-box-counties"
-                                                                options={
-                                                                    counties
-                                                                }
-                                                                sx={{
-                                                                    width: '100%',
-                                                                }}
-                                                                renderInput={(
-                                                                    params
-                                                                ) => (
-                                                                    <TextField
-                                                                        name="countyName"
-                                                                        onSelect={
-                                                                            handleSelect
-                                                                        }
-                                                                        {...params}
-                                                                        label="İlçe"
-                                                                    />
-                                                                )}
-                                                            />
-                                                        </Col>
-                                                    </Row>
-                                                    <Row className="mt-2">
-                                                        <Col sm={12}>
-                                                            <Autocomplete
-                                                                disablePortal
-                                                                id="combo-box-neighbourhoods"
-                                                                options={
-                                                                    neighbourhoods
-                                                                }
-                                                                sx={{
-                                                                    width: '100%',
-                                                                }}
-                                                                renderInput={(
-                                                                    params
-                                                                ) => (
-                                                                    <TextField
-                                                                        name="neighbourhoodName"
-                                                                        onSelect={
-                                                                            handleSelect
-                                                                        }
-                                                                        {...params}
-                                                                        label="Mahalle"
-                                                                    />
-                                                                )}
-                                                            />
-                                                        </Col>
-                                                    </Row>
-                                                    <Row className="mt-2">
-                                                        <Col sm={12}>
-                                                            <Autocomplete
-                                                                disablePortal
-                                                                id="combo-box-streets"
-                                                                options={
-                                                                    streets
-                                                                }
-                                                                sx={{
-                                                                    width: '100%',
-                                                                }}
-                                                                renderInput={(
-                                                                    params
-                                                                ) => (
-                                                                    <TextField
-                                                                        name="streetName"
-                                                                        onSelect={
-                                                                            handleSelect
-                                                                        }
-                                                                        {...params}
-                                                                        label="Sokak"
-                                                                    />
-                                                                )}
-                                                            />
-                                                        </Col>
-                                                    </Row>
-                                                    <Row className="mt-2">
-                                                        <Col sm={12}>
-                                                            <Autocomplete
-                                                                disablePortal
-                                                                id="combo-box-buildings"
-                                                                // options={
-
-                                                                // }
-                                                                sx={{
-                                                                    width: '100%',
-                                                                }}
-                                                                renderInput={(
-                                                                    params
-                                                                ) => (
-                                                                    <TextField
-                                                                        name="buildingName"
-                                                                        onSelect={
-                                                                            handleSelect
-                                                                        }
-                                                                        {...params}
-                                                                        label="Yapı"
-                                                                    />
-                                                                )}
-                                                            />
-                                                        </Col>
-                                                    </Row>
-                                                </Card.Body>
-                                            </Card>
+                                            {/* BURAYA FORM GELECEK */}
+                                            <SearchForm
+                                                buildingInfo={buildingInfo}
+                                                setBuildingInfo={
+                                                    setBuildingInfo
+                                                }
+                                            />
                                         </Row>
+
                                         {isCameraAllowed && (
                                             <Row className="mt-2">
                                                 <QrCodeReader
