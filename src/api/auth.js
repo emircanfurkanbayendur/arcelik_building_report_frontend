@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const POST_USER_URL = `${process.env.REACT_APP_BASE_URL}/api/User`;
-const POST_AUTHENTICATE_URL = `${process.env.REACT_APP_BASE_URL}/api/User/authenticate`;
+const POST_LOGIN_AUTHENTICATE_URL = `${process.env.REACT_APP_BASE_URL}/api/Login/authenticate`;
 
 // Example API request when button is clicked.
 export const postUser = async ({ firstName, lastName, email, password }) => {
@@ -33,7 +33,7 @@ export const postAuthenticate = async ({ email, password }) => {
         password,
     };
 
-    await axios.post(POST_AUTHENTICATE_URL, user).then(async (result) => {
+    await axios.post(POST_LOGIN_AUTHENTICATE_URL, user).then(async (result) => {
         resultData = await result.data;
     });
 

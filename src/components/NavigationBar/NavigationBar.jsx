@@ -9,8 +9,8 @@ import MemberIcon from '@rsuite/icons/Member';
 import EmailIcon from '@rsuite/icons/Email';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import {useNavigate} from "react-router-dom"
-import {Button} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 import PeoplesIcon from '@rsuite/icons/Peoples';
 const linkStyle = {
     textDecoration: 'none',
@@ -20,16 +20,12 @@ const linkStyle = {
 const NavigationBar = ({ onSelect, activeKey, ...props }) => {
     const navigation = useNavigate();
     const informations = () => {
-        if(localStorage.getItem("user")==null){
-            navigation("/auth");
-        
-        
+        if (localStorage.getItem('user') == null) {
+            navigation('/auth');
+        } else {
+            navigation('/profile');
         }
-        else{
-            
-            navigation("/profile");
-            };
-    }
+    };
     return (
         <Container fluid>
             <Row>
@@ -42,7 +38,7 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                     <Col className="d-none d-lg-block">
                         <Nav onSelect={onSelect} activeKey={activeKey}>
                             <Nav.Item eventKey="1" icon={<HomeIcon />}>
-                                <Link to="/HomePage" style={linkStyle}>
+                                <Link to="/home" style={linkStyle}>
                                     Anasayfa
                                 </Link>
                             </Nav.Item>
@@ -72,36 +68,38 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                                         İletişim
                                     </Link>
                                 </Nav.Item>
-                             
                             </Nav.Menu>
-                            {localStorage.getItem("user")==null
-                                                ? ''
-                                                :JSON.parse(
-                                                    localStorage.getItem('user')
-                                                ).roleId=="1" 
-                                                ? <Nav.Item eventKey="7"  icon={<PeoplesIcon />}>
-                                    <Link to="/users" className='disabled-link' style={linkStyle}>
-                                      Kişiler
+                            {localStorage.getItem('user') == null ? (
+                                ''
+                            ) : JSON.parse(localStorage.getItem('user'))
+                                  .roleId == '1' ? (
+                                <Nav.Item eventKey="7" icon={<PeoplesIcon />}>
+                                    <Link
+                                        to="/users"
+                                        className="disabled-link"
+                                        style={linkStyle}
+                                    >
+                                        Kişiler
                                     </Link>
                                 </Nav.Item>
-                                                :''}
-                               
+                            ) : (
+                                ''
+                            )}
                         </Nav>
                     </Col>
                     <Col>
                         <Nav pullRight>
                             <Nav.Item icon={<UserInfoIcon />}>
-                            <Button onClick={()=>informations()}>
-                                {localStorage.getItem("user")==null
-                                                ? 'Kullanıcı Girişi'
-                                                : JSON.parse(
-                                                    localStorage.getItem('user')
-                                                ).firstName +
-                                                ' ' +
-                                                JSON.parse(
-                                                    localStorage.getItem('user')
-                                                ).lastName}
-                                   
+                                <Button onClick={() => informations()}>
+                                    {localStorage.getItem('user') == null
+                                        ? 'Kullanıcı Girişi'
+                                        : JSON.parse(
+                                              localStorage.getItem('user')
+                                          ).firstName +
+                                          ' ' +
+                                          JSON.parse(
+                                              localStorage.getItem('user')
+                                          ).lastName}
                                 </Button>
                             </Nav.Item>
                         </Nav>

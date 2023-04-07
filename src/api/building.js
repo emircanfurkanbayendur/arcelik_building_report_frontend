@@ -59,14 +59,33 @@ export const getBuildingByCode = async (buildingCode) => {
     return await resultData;
 };
 
-export const getCount = async () => {
+export const getStreetsByAddress = async (city, district, neighbourhood) => {
     var resultData;
 
     await axios
-        .get(`${BUILDING_ENDPOINT_URL}/count/`)
+        .get(`${BUILDING_ENDPOINT_URL}/streetByAdress`, {
+            params: {
+                city: city,
+                district: district,
+                neighbourhood: neighbourhood,
+            },
+        })
         .then(async (result) => {
             resultData = await result.data;
+            await console.log('resultData--------------------------------');
+
+            await console.log(resultData);
         });
+
+    return await resultData;
+};
+
+export const getCount = async () => {
+    var resultData;
+
+    await axios.get(`${BUILDING_ENDPOINT_URL}/count/`).then(async (result) => {
+        resultData = await result.data;
+    });
 
     return await resultData;
 };

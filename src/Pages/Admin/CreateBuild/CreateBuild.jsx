@@ -20,7 +20,6 @@ import cities from '../../../db/cities';
 import counties from '../../../db/counties';
 import villages from '../../../db/villages';
 import neighbourhoods from '../../../db/neighbourhoods';
-import streets from '../../../db/streets';
 
 const initialValues = {
     cityName: 'ADANA',
