@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ListCardItem from '../../../components/ListCardItem/ListCardItem';
+import { getBuildingsByUserId } from '../../../api/building';
+import { useEffect } from 'react';
 
 const ListBuilds = () => {
-    const testBuildingArr = [1, 2, 3, 4, 5];
+    const { id } = JSON.parse(localStorage.getItem('user'));
+    const [buildingList, setBuildingList] = useState([]);
+
+    const updateBuildingList = async () => {
+        const buildingList = await getBuildingsByUserId(id);
+        await setBuildingList(buildingList);
+        await console.log(buildingList);
+    };
+
+    useEffect(() => {
+        updateBuildingList();
+    }, []);
 
     return (
         <Container
@@ -12,9 +25,9 @@ const ListBuilds = () => {
                 maxWidth: '100%',
             }}
         >
-            {testBuildingArr.map((item, index) => (
+            {buildingList.map((building, index) => (
                 <Row className="mt-1" key={index}>
-                    <ListCardItem key={index} />
+                    <ListCardItem key={index} building={building} />
                 </Row>
             ))}
         </Container>

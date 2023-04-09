@@ -47,11 +47,45 @@ export const postBuilding = async ({
     return await resultData;
 };
 
+export const putBuilding = async (building) => {
+    var resultData;
+    let config = {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+    };
+
+    await axios
+        .put(`${BUILDING_ENDPOINT_URL}`, building, config)
+        .then(async (result) => {
+            resultData = await result.data;
+        });
+
+    return await resultData;
+};
+
 export const getBuildingByCode = async (buildingCode) => {
     var resultData;
 
     await axios
         .get(`${BUILDING_ENDPOINT_URL}/code/${buildingCode}`)
+        .then(async (result) => {
+            resultData = await result.data;
+        });
+
+    return await resultData;
+};
+
+export const getBuildingsByUserId = async (userId) => {
+    var resultData;
+    let config = {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+    };
+
+    await axios
+        .get(`${BUILDING_ENDPOINT_URL}/user/${userId}`)
         .then(async (result) => {
             resultData = await result.data;
         });
@@ -72,8 +106,6 @@ export const getStreetsByAddress = async (city, district, neighbourhood) => {
         })
         .then(async (result) => {
             resultData = await result.data;
-            //await console.log('resultData--------------------------------');
-            //await console.log(resultData);
         });
 
     return await resultData;
@@ -98,8 +130,6 @@ export const getBuildingsByAddress = async (
         })
         .then(async (result) => {
             resultData = await result.data;
-            //await console.log('resultData--------------------------------');
-            //await console.log(resultData);
         });
 
     return await resultData;

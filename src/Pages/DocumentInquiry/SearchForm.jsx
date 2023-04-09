@@ -61,6 +61,9 @@ function SearchForm({ buildingInfo, setBuildingInfo }) {
         console.log(selectedAddress);
     }, [selectedAddress]);
 
+    useEffect(() => {
+        console.log(streetList);
+    }, [streetList]);
     return (
         <Card>
             <Card.Body>
@@ -227,7 +230,7 @@ function SearchForm({ buildingInfo, setBuildingInfo }) {
                             sx={{ width: '100%' }}
                             disabled={
                                 selectedAddress.neighbourhoodName == '' ||
-                                streetList.length == 0
+                                streetList?.length == 0
                                     ? true
                                     : false
                             }
@@ -251,7 +254,7 @@ function SearchForm({ buildingInfo, setBuildingInfo }) {
                                     }));
                                 }}
                             >
-                                {streetList.map((street) => {
+                                {streetList?.map((street) => {
                                     return (
                                         <MenuItem key={street} value={street}>
                                             {street}
@@ -268,7 +271,7 @@ function SearchForm({ buildingInfo, setBuildingInfo }) {
                             sx={{ width: '100%' }}
                             disabled={
                                 selectedAddress.streetName == '' ||
-                                buildingList.length == 0
+                                buildingList?.length == 0
                                     ? true
                                     : false
                             }
@@ -291,7 +294,7 @@ function SearchForm({ buildingInfo, setBuildingInfo }) {
                                     }));
                                 }}
                             >
-                                {buildingList.map((building) => {
+                                {buildingList?.map((building) => {
                                     return (
                                         <MenuItem
                                             key={building.name}

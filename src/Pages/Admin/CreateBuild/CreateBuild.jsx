@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
+import {
+    Container,
+    Row,
+    Col,
+    Card,
+    Button,
+    Spinner,
+    Alert,
+} from 'react-bootstrap';
 import {
     TextField,
     Autocomplete,
@@ -44,6 +52,7 @@ const getBase64 = (file) => {
 };
 
 const CreateBuild = () => {
+    const [showAlert, setShowAlert] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const [documentToUpload, setDocumentToUpload] = useState(null);
     const [selectBoxValues, setSelectBoxValues] = useState({
@@ -81,6 +90,17 @@ const CreateBuild = () => {
         });
 
         setIsPending(false);
+        setShowAlert(true);
+        resetForm(values);
+    };
+
+    const resetForm = (values) => {
+        values.streetName = '';
+        values.buildingName = '';
+        values.buildingCode = '';
+        values.latitude = '-';
+        values.longitude = '-';
+        setDocumentToUpload(null);
     };
 
     const handleClick = (setFieldValue) => {
@@ -132,6 +152,33 @@ const CreateBuild = () => {
                                             </h1>
 
                                             <Col className="mt-2"></Col>
+                                        </Row>
+
+                                        <Row className="my-2">
+                                            {showAlert && (
+                                                <>
+                                                    <Alert
+                                                        variant="success"
+                                                        onClose={() =>
+                                                            setShowAlert(false)
+                                                        }
+                                                        dismissible
+                                                    >
+                                                        <Alert.Heading>
+                                                            Kayıt ekleme işlemi
+                                                            başarılı!
+                                                        </Alert.Heading>
+                                                        <p>
+                                                            Kayıt başarıyla
+                                                            eklendi. Daha önce
+                                                            kaydettiğiniz yapı
+                                                            bilgilerine 'Kayıtlı
+                                                            Yapılar' sekmesinden
+                                                            ulaşabilirsiniz!
+                                                        </p>
+                                                    </Alert>
+                                                </>
+                                            )}
                                         </Row>
 
                                         <Row className="mb-3">

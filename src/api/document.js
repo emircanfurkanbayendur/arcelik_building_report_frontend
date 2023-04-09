@@ -41,3 +41,20 @@ export const getDocument = async (id) => {
 
     return await resultData;
 };
+
+export const deleteDocument = async (id) => {
+    var resultData;
+    let config = {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+    };
+
+    await axios
+        .delete(`${DOCUMENT_ENDPOINT_URL}/${id}`, config)
+        .then(async (result) => {
+            resultData = await result.data;
+        });
+
+    return await resultData;
+};
