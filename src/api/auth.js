@@ -8,14 +8,12 @@ export const postUser = async ({ firstName, lastName, email, password }) => {
     var resultData;
 
     const user = {
-        id: 0,
+        
         firstName,
         lastName,
         email,
         password,
-        createdAt: new Date().toJSON(),
-        isActive: true,
-        roleId: 1,
+        
     };
 
     await axios.post(POST_USER_URL, user).then(async (result) => {
