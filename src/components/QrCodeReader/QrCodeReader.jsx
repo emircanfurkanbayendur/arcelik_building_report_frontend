@@ -9,9 +9,7 @@ const QrCodeReader = ({ buildingCodeInput, setBuildingCodeInput }) => {
 function result () {
 if(data!=null){
   
-    window.location.replace(
-        data
-    );
+    navigate(`/document/${data}`);
 }
 
 }

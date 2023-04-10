@@ -25,7 +25,7 @@ import Admin from './Pages/Admin/Admin';
 import CreateBuild from './Pages/Admin/CreateBuild/CreateBuild';
 import Profile from './Pages/Profile/Profile';
 import Update from './Pages/Profile/Update';
-import DocumentInfo from './Pages/DocumentInquiry/DocumentInfo';
+import DocumentInfo from './Pages/DocumentInquiry/documentInfo';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <ThemeProvider

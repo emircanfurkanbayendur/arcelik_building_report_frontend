@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getBuildingByCode } from '../../api/building';
+import CryptoJS from 'crypto-js';
 const DocumentInfo = () => {
     const [buildingInfo, setBuildingInfo] = useState({
         documents: [],
@@ -11,7 +12,11 @@ const DocumentInfo = () => {
     useEffect(() => {
         // declare the data fetching function
         const fetchData = async () => {
-            const building = await getBuildingByCode({ id }.id);
+            const secretPass = 'XkhZG4fW2t2W';
+            const bytes = CryptoJS.AES.decrypt(id, secretPass);
+            const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+            const building = await getBuildingByCode(data);
             await setBuildingInfo(building);
 
             console.log('building');
@@ -25,6 +30,7 @@ const DocumentInfo = () => {
             .catch(console.error);
     }, []);
     var data2 = 'data:application/pdf;base64,' + buildingInfo;
+    console.log(data2);
     //console.log({id}.id);
 
     return (

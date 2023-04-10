@@ -23,12 +23,12 @@ import PopupModal from './PopupModal';
 import DragDrop from '../../../components/DragDrop/DragDrop';
 import { postBuilding } from '../../../api/building';
 import { postDocument } from '../../../api/document';
-
+import QRCode from 'qrcode'
 import cities from '../../../db/cities';
 import counties from '../../../db/counties';
 import villages from '../../../db/villages';
 import neighbourhoods from '../../../db/neighbourhoods';
-
+import CryptoJS from "crypto-js";
 const initialValues = {
     cityName: 'ADANA',
     countyName: 'SEYHAN',
@@ -52,6 +52,8 @@ const getBase64 = (file) => {
 };
 
 const CreateBuild = () => {
+    const [url, setUrl] = useState('')
+	const [qr, setQr] = useState('')
     const [showAlert, setShowAlert] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const [documentToUpload, setDocumentToUpload] = useState(null);
@@ -64,10 +66,19 @@ const CreateBuild = () => {
 
     const fileTypes = ['PDF'];
     let utf8Encode = new TextEncoder();
-
+    const secretPass = "XkhZG4fW2t2W";
     const handleFormSubmit = async (values) => {
         setIsPending(true);
-
+        var data;
+        do {
+            data = CryptoJS.AES.encrypt(
+               JSON.stringify(values.buildingCode),
+               secretPass
+             ).toString();
+             console.log(data.search("/"));
+         } while (data.search("/")>0);
+          
+          GenerateQRCode(data);
         const { createdByUserId, id } = await postBuilding({
             name: values.buildingName,
             city: values.cityName,
@@ -117,6 +128,23 @@ const CreateBuild = () => {
             console.log(data.replace('data:application/pdf;base64,', ''));
         });
     }, [documentToUpload]);
+    const GenerateQRCode = (data) => {
+      
+		QRCode.toDataURL(data, {
+			width: 200,
+			margin: 2,
+			color: {
+				dark: '#000000',
+				light: '#ffffff'
+			}
+		}, (err, data) => {
+			if (err) return console.error(err)
+
+			console.log(data)
+			setQr(data)
+		})
+	}
+       
 
     return (
         <Container
@@ -542,6 +570,11 @@ const CreateBuild = () => {
                             )}
                         </Formik>
                     </Card.Body>
+                    {qr && <>
+				<img src={qr} width="200" height="200" style={{marginLeft:"auto", marginRight:"auto"}}/>
+                <Button href={qr} variant="secondary" download="qrcode.png" style={{marginLeft:"auto", marginRight:"auto", textDecoration:"none", color:"#FFFFFF"}}>Download</Button>
+				
+			</>}
                 </Card>
             </Row>
         </Container>

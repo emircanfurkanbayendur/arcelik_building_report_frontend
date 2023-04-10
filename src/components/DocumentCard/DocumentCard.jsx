@@ -19,13 +19,16 @@ const DocumentCard = ({ buildingInfo, setModalShow }) => {
     const [encrptedData, setEncrptedData] = useState('');
 
     const secretPass = 'XkhZG4fW2t2W';
-
+var data;
     const navigate = useNavigate();
     const click = () => {
-        const data = CryptoJS.AES.encrypt(
-            JSON.stringify(buildingInfo.code),
-            secretPass
-        ).toString();
+        do {
+            data = CryptoJS.AES.encrypt(
+               JSON.stringify(buildingInfo.code),
+               secretPass
+             ).toString();
+             console.log(data.search("/"));
+         } while (data.search("/")>0);
         navigate(`/document/${data}`);
     };
     console.log('props');
