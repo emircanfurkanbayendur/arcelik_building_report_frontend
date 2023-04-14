@@ -25,7 +25,7 @@ import Admin from './Pages/Admin/Admin';
 import CreateBuild from './Pages/Admin/CreateBuild/CreateBuild';
 import Profile from './Pages/Profile/Profile';
 import Update from './Pages/Profile/Update';
-import DocumentInfo from './Pages/DocumentInquiry/documentInfo';
+import DocumentInfo from './Pages/DocumentInquiry/DocumentInfo';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <ThemeProvider
@@ -45,7 +45,7 @@ root.render(
                 <Route path="/project" element={<Project />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/update" element={<Update />} />
-                <Route path="/document/:id" element={<DocumentInfo />} />
+                { <Route path="/document/:id" element={<DocumentInfo />} /> }
                 <Route path="/users" element={<UsersMain />} />
             </Routes>
             <Footer />
