@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import { persistor, store } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 import { ThemeProvider } from 'react-bootstrap';
 import './index.css';
 import 'rsuite/dist/rsuite.min.css';
@@ -19,38 +22,61 @@ import NavigationBar from './components/NavigationBar/NavigationBar';
 import Footer from './components/Footer/Footer';
 import UsersMain from './Pages/Users/UsersMain';
 import DocumentInquiry from './Pages/DocumentInquiry/DocumentInquiry';
-import Home from './Pages/HomePage/HomePage';
 import HomePage from './Pages/HomePage/HomePage';
 import Admin from './Pages/Admin/Admin';
-import CreateBuild from './Pages/Admin/CreateBuild/CreateBuild';
 import Profile from './Pages/Profile/Profile';
 import Update from './Pages/Profile/Update';
 import DocumentInfo from './Pages/DocumentInquiry/DocumentInfo';
+import TestPage from './TestPage';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-    <ThemeProvider
-        breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
-        minBreakpoint="xxs"
-    >
-        <BrowserRouter>
-            <NavigationBar />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/documentinquiry" element={<DocumentInquiry />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/team" element={<Team />} />
-                <Route path="/information" element={<Information />} />
-                <Route path="/project" element={<Project />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/update" element={<Update />} />
-                { <Route path="/document/:id" element={<DocumentInfo />} /> }
-                <Route path="/users" element={<UsersMain />} />
-            </Routes>
-            <Footer />
-        </BrowserRouter>
-    </ThemeProvider>
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <ThemeProvider
+                breakpoints={[
+                    'xxxl',
+                    'xxl',
+                    'xl',
+                    'lg',
+                    'md',
+                    'sm',
+                    'xs',
+                    'xxs',
+                ]}
+                minBreakpoint="xxs"
+            >
+                <BrowserRouter>
+                    <NavigationBar />
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/home" element={<HomePage />} />
+                        <Route path="/testpage" element={<TestPage />} />
+                        <Route path="/auth" element={<Auth />} />
+                        <Route
+                            path="/documentinquiry"
+                            element={<DocumentInquiry />}
+                        />
+                        <Route path="/admin" element={<Admin />} />
+                        <Route path="/team" element={<Team />} />
+                        <Route path="/information" element={<Information />} />
+                        <Route path="/project" element={<Project />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/update" element={<Update />} />
+                        {
+                            <Route
+                                path="/document/:id"
+                                element={<DocumentInfo />}
+                            />
+                        }
+                        <Route path="/users" element={<UsersMain />} />
+                    </Routes>
+                    <Footer />
+                </BrowserRouter>
+            </ThemeProvider>
+        </PersistGate>
+    </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

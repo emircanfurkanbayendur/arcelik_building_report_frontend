@@ -3,9 +3,12 @@ import { Container, Row, Col } from 'react-bootstrap';
 import ListCardItem from '../../../components/ListCardItem/ListCardItem';
 import { getBuildingsByUserId } from '../../../api/building';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../../redux/auth/authSlice';
 
 const ListBuilds = () => {
-    const { id } = JSON.parse(localStorage.getItem('user'));
+    const user = useSelector(userSelector);
+    const { id } = user;
     const [buildingList, setBuildingList] = useState([]);
 
     const updateBuildingList = async () => {
