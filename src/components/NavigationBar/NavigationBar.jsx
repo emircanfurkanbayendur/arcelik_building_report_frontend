@@ -7,15 +7,12 @@ import SendIcon from '@rsuite/icons/Send';
 import ProjectIcon from '@rsuite/icons/Project';
 import MemberIcon from '@rsuite/icons/Member';
 import EmailIcon from '@rsuite/icons/Email';
-import AdminIcon from '@rsuite/icons/Admin';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import AdminIcon from '@rsuite/icons/Admin';
 import PeoplesIcon from '@rsuite/icons/Peoples';
-import { useSelector } from 'react-redux';
-import { userSelector } from '../../redux/auth/authSlice';
-
 const linkStyle = {
     textDecoration: 'none',
     color: '#000',
@@ -23,9 +20,13 @@ const linkStyle = {
 
 const NavigationBar = ({ onSelect, activeKey, ...props }) => {
     const navigation = useNavigate();
-    const user = useSelector(userSelector);
-
-    console.log(user);
+    const informations = () => {
+        if (localStorage.getItem('user') == null) {
+            navigation('/auth');
+        } else {
+            navigation('/profile');
+        }
+    };
     return (
         <Container fluid>
             <Row>
@@ -47,50 +48,71 @@ const NavigationBar = ({ onSelect, activeKey, ...props }) => {
                                     Yapı Durum Belgesi Sorgulama
                                 </Link>
                             </Nav.Item>
-
+                            {localStorage.getItem('user') == null ? (
+                                ''
+                            ) : JSON.parse(localStorage.getItem('user'))
+                                  .roleId == '1' ? (
+                                <Nav.Item eventKey="7" icon={<AdminIcon />}>
+                                    <Link
+                                        to="/admin"
+                                        className="disabled-link"
+                                        style={linkStyle}
+                                    >
+                                        Admin
+                                    </Link>
+                                </Nav.Item>
+                            ) : (
+                                ''
+                            )}
+                            
                             <Nav.Menu title="Hakkında" style={linkStyle}>
-                                <Nav.Item eventKey="3" icon={<ProjectIcon />}>
+                                <Nav.Item eventKey="4" icon={<ProjectIcon />}>
                                     <Link to="/project" style={linkStyle}>
                                         Proje
                                     </Link>
                                 </Nav.Item>
-                                <Nav.Item eventKey="4" icon={<MemberIcon />}>
+                                <Nav.Item eventKey="5" icon={<MemberIcon />}>
                                     <Link to="/team" style={linkStyle}>
                                         Takım
                                     </Link>
                                 </Nav.Item>
-                                <Nav.Item eventKey="5" icon={<EmailIcon />}>
+                                <Nav.Item eventKey="6" icon={<EmailIcon />}>
                                     <Link to="/information" style={linkStyle}>
                                         İletişim
                                     </Link>
                                 </Nav.Item>
                             </Nav.Menu>
-                            {user && user.roleId === 1 && (
-                                <>
-                                    <Nav.Item eventKey="6" icon={<AdminIcon />}>
-                                        <Link to="/admin" style={linkStyle}>
-                                            Yönetici Paneli
-                                        </Link>
-                                    </Nav.Item>
-                                    <Nav.Item
-                                        eventKey="7"
-                                        icon={<PeoplesIcon />}
+                            {localStorage.getItem('user') == null ? (
+                                ''
+                            ) : JSON.parse(localStorage.getItem('user'))
+                                  .roleId == '1' ? (
+                                <Nav.Item eventKey="7" icon={<PeoplesIcon />}>
+                                    <Link
+                                        to="/users"
+                                        className="disabled-link"
+                                        style={linkStyle}
                                     >
-                                        <Link to="/users" style={linkStyle}>
-                                            Kullanıcı Yönetimi
-                                        </Link>
-                                    </Nav.Item>
-                                </>
+                                        Kişiler
+                                    </Link>
+                                </Nav.Item>
+                            ) : (
+                                ''
                             )}
                         </Nav>
                     </Col>
                     <Col>
                         <Nav pullRight>
                             <Nav.Item icon={<UserInfoIcon />}>
-                                <Button onClick={null}>
-                                    {user
-                                        ? user.firstName + ' ' + user.lastName
-                                        : 'Giriş Yap'}
+                                <Button onClick={() => informations()}>
+                                    {localStorage.getItem('user') == null
+                                        ? 'Kullanıcı Girişi'
+                                        : JSON.parse(
+                                              localStorage.getItem('user')
+                                          ).firstName +
+                                          ' ' +
+                                          JSON.parse(
+                                              localStorage.getItem('user')
+                                          ).lastName}
                                 </Button>
                             </Nav.Item>
                         </Nav>

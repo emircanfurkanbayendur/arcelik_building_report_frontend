@@ -1,10 +1,11 @@
 import { TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { Card, Row, Col, Button, Accordion, Spinner } from 'react-bootstrap';
-import QRCode from 'react-qr-code';
+import QRCode from 'qrcode'
 import { deleteDocument, postDocument } from '../../api/document';
 import { putBuilding } from '../../api/building';
 import DragDrop from '../DragDrop/DragDrop';
+import CryptoJS from "crypto-js";
 import { useEffect } from 'react';
 
 const addressToString = (
@@ -29,6 +30,8 @@ const getBase64 = (file) => {
 };
 
 const ListCardItem = ({ building }) => {
+    const [kontrol, setKontrol] = useState('')
+    const [qr, setQr] = useState('')
     const [isPending, setIsPending] = useState(false);
     const [isPendingForNewDocument, setIsPendingForNewDocument] =
         useState(false);
@@ -46,7 +49,28 @@ const ListCardItem = ({ building }) => {
         }));
         setIsPending(false);
     };
+    const GenerateQRCode = (data) => {
+      
+		QRCode.toDataURL(data, {
+			width: 200,
+			margin: 2,
+			color: {
+				dark: '#000000',
+				light: '#ffffff'
+			}
+		}, (err, data) => {
+			if (err) return console.error(err)
 
+			console.log(data)
+			setQr(data)
+		})
+	}
+    
+    useEffect(() => {
+        GenerateQRCode(`http://localhost:3000/document/${data}`);
+        
+    }, [kontrol]);
+  
     const handlePostDocument = async () => {
         setIsPendingForNewDocument(true);
         const document = await postDocument({
@@ -64,16 +88,30 @@ const ListCardItem = ({ building }) => {
     };
 
     const handleUpdateBuilding = async () => {
+        console.log(buildingInfo)
         await putBuilding(buildingInfo);
+        setKontrol(buildingInfo.code);
     };
-
+   
+    const secretPass = "XkhZG4fW2t2W";
+    var data;
+    do {
+        data = CryptoJS.AES.encrypt(
+           JSON.stringify(buildingInfo.code),
+           secretPass
+         ).toString();
+         console.log(data.search("/"));
+     } while (data.search("/")>0);
+     const deger = `http://localhost:3000/document/${data}`
     return (
+      
         <Card className="mb-3">
             <Card.Body>
                 <Row className="align-items-center">
                     <Col sm={10}>
                         <Card.Title>
                             <h1>
+
                                 {!isInEditMode ? (
                                     buildingInfo.name
                                 ) : (
@@ -224,15 +262,13 @@ const ListCardItem = ({ building }) => {
                     <Row className="my-2 d-sm-block d-lg-none"></Row>
 
                     <Col sm={2} className="d-flex justify-content-center">
-                        <QRCode
-                            size={256}
-                            style={{
-                                height: 'auto',
-                                maxWidth: '60%',
-                            }}
-                            value={buildingInfo.code}
-                        />
+                      
+                    <img src={qr} width="200" height="200" style={{marginLeft:"auto", marginRight:"auto"}}/>
+                  
+                
+               
                     </Col>
+                    
                     <Row className="my-2 d-sm-block d-lg-none"></Row>
 
                     <Col sm={1}></Col>
@@ -279,11 +315,15 @@ const ListCardItem = ({ building }) => {
                             )}
                         </Card.Text>
                     </Col>
+                     
                     <Col sm={2} className="pt-2">
                         <Row className="mb-1">
                             <Button variant="danger" size="sm">
                                 Kaydı sil
                             </Button>
+                        </Row>
+                        <Row className="mb-1">
+                        <Button href={qr} variant="secondary" download="qrcode.png" style={{marginLeft:"auto", marginRight:"auto", textDecoration:"none", color:"#FFFFFF"}}>Qr İndir</Button>
                         </Row>
                         <Row>
                             <Button
@@ -297,6 +337,8 @@ const ListCardItem = ({ building }) => {
                                 {!isInEditMode ? 'Kaydı düzenle' : 'Kaydet'}
                             </Button>
                         </Row>
+                       
+                        
                     </Col>
                 </Row>
                 {isInEditMode && (

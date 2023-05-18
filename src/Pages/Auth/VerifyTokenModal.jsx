@@ -8,10 +8,6 @@ import {
     postForgotPassword,
     postVerifyToken,
 } from '../../api/auth';
-import {
-    postAuthenticateAsync,
-    postVerifyTokenAsync,
-} from '../../redux/auth/services';
 
 function VerifyTokenModal({ show, onHide, isResetModal, values }) {
     const [inputText, setInputText] = useState('');
@@ -57,8 +53,8 @@ function VerifyTokenModal({ show, onHide, isResetModal, values }) {
                         if (isResetModal) {
                             await postForgotPassword(inputText);
                         } else {
-                            await postVerifyTokenAsync(inputText);
-                            await postAuthenticateAsync(values);
+                            await postVerifyToken(inputText);
+                            await postAuthenticate(values);
 
                             window.location.reload();
                         }

@@ -1,41 +1,96 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Figure, Button } from 'react-bootstrap';
-import { getUsers } from '../../api/user';
+import { Container, Row, Col, Button,Alert,Spinner } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
-import { updateUserRole } from '../../api/user';
-import ListCardItem from '../../components/ListCardItem/ListCardItem';
-import { ref } from 'yup';
-import { Refresh } from '@mui/icons-material';
-const refresh = () => window.location.reload(true)
-
+import { useSelector } from 'react-redux';
+import {getUsersDatasAsync} from '../../redux/project/reduxUsers'
+import { useDispatch } from 'react-redux';
+import {putUsersDatasAsync} from '../../redux/project/reduxUsers'
+import BeatLoader from "react-spinners/BeatLoader";
 const Users = () => {
-    const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")))
-    const [control,setControl] = useState("")
-   const  updateRole = async (id) => {
 
-   await  updateUserRole(id);
+   
+    const dispatch = useDispatch();
+    const [control,setControl] = useState("12345")
+    const rejected=  useSelector((state) => state.reduxUsers. getUsersIsRejected)
+    const  updateRole = async (id) => {
+setControl("1234")
+      await dispatch(putUsersDatasAsync(id))
+
    
 
+
   }
-  
+
+ 
+
   useEffect( () => {
-setControl("12s")
-   getUsers();
-   setUsers(JSON.parse(localStorage.getItem("users")));
+    setControl("1235")
+
+dispatch( getUsersDatasAsync())
+  
+
+
+
+
 
 
 
                                                        
-  },[control])
+  },[dispatch])
+ 
+  const list =  useSelector((state) => state.reduxUsers.items)
+  const pending =  useSelector((state) => state.reduxUsers. getUsersIsPending)
+  const rolePending =  useSelector((state) => state.reduxUsers. updateRolePending)
+  const roleRejected =  useSelector((state) => state.reduxUsers. updateRoleIsRejected)
+  console.log(list)
+  if(roleRejected){
+alert("Yetkilendirme İşlemi Başarısız Oldu");
 
+  }
 
-
+if(rejected){
+  
+  return(
+ <div>
+ <br/>
+              <br/>
+              <br/>
+  <Container>
+      <>
+          <Alert
+              variant="danger"
+            
+              
+          >
+              <Alert.Heading>
+                 Kullanıcıların Listelenme İşlemi Sırasında Bir Hata Oluştu
+              </Alert.Heading>
+              <br/>
+              <br/>
+              <br/>
+              <p>
+              Kullanıcıların Listelenme İşlemi Sırasında Bir Hata Oluştu.
+              Lütfen Daha Sonra Tekrar Deneyiniz...
+              </p>
+              <br/>
+              <br/>
+              <br/>
+          </Alert>
+      </>
+      </Container>
+</div>
+)
+}
+else{
 
     return (
 
-
+ 
+   
       <div >
-        <Container 
+          {pending == false ? (
+        <>
+         <Container 
           style={{
             minHeight: window.visualViewport.height - 100,
             maxWidth: '60%',
@@ -45,7 +100,7 @@ setControl("12s")
           <br />
 
 
-          {users.map((item, index) => (
+          {list.map((item, index) => (
 
             <Row className="mt-1" key={index}>
               <br />
@@ -73,7 +128,7 @@ setControl("12s")
 
                       </Col>
                       <Col md={{ span: 4, offset: 12 }} style={{ fontSize: 20 }}>
-                        Aktiflik Durumu :  {item.isActive == true ? 'Aktif' : 'Pasif'}
+                        Aktiflik Durumu :  {item.isActive == true ? <button type="button" class="btn btn-outline-success" data-mdb-ripple-color="dark" disabled>Aktif</button> : <button type="button" class="btn btn-outline-warning" data-mdb-ripple-color="dark" disabled>İn-Aktif</button>}
 
                       </Col>
                     </Row>
@@ -89,19 +144,23 @@ setControl("12s")
                     </Row>
                     <Row className="mb-1">
                       <Col md={4} style={{ fontSize: 20 }}>
-                        Kullanıcı Rolü : {item.role.name}
+                        Kullanıcı Rolü : {item.roleId}
                       </Col>
 
                     </Row>
                     <Row>
-                      <Col md={{ span: 4, offset: 12 }} style={{ fontSize: 20 }}>
+                      
+                      
                         {item.roleId!=1 ?
-                        <Button variant="danger" size="12" onClick={async () =>{ await updateRole(item.id); setControl("123"); console.log(control)}}>
-                        Yetkilendir
+                        <Button variant="secondary" size="12" onClick={ () =>updateRole(item.id) }>
+                           {rolePending == true ? (
+                                                <Spinner animation="border" />
+                                            ) :  "Yetkilendir" }
+                       
                       </Button>:
                         ""}
                         
-                      </Col>
+                     
                     </Row>
 
                   </Card.Text>
@@ -113,6 +172,29 @@ setControl("12s")
           ))}
 
         </Container>
+        </>
+    ): <Container 
+    style={{
+      minHeight: window.visualViewport.height - 100,
+      maxWidth: '60%',
+      flex: 1
+    }}
+  >
+    <br />
+    <div style={{display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop:'370px'}}>
+<BeatLoader color="#585c5b" />
+</div>
+    
+
+   
+
+  </Container>
+  }
+       
+      
       </div>
 
 
@@ -120,7 +202,7 @@ setControl("12s")
     );
           
          
-
+  }
 };
 
 export default Users;

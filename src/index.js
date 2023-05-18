@@ -2,9 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import { persistor, store } from './redux/store';
-import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
 import { ThemeProvider } from 'react-bootstrap';
 import './index.css';
 import 'rsuite/dist/rsuite.min.css';
@@ -12,8 +9,6 @@ import 'rsuite/dist/rsuite.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // Bootstrap Bundle JS
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-
-import App from './App';
 import Auth from './Pages/Auth/Auth.jsx';
 import Team from './Pages/Team/Team.jsx';
 import Information from './Pages/Information/Information';
@@ -25,57 +20,41 @@ import DocumentInquiry from './Pages/DocumentInquiry/DocumentInquiry';
 import HomePage from './Pages/HomePage/HomePage';
 import Admin from './Pages/Admin/Admin';
 import Profile from './Pages/Profile/Profile';
-import Update from './Pages/Profile/Update';
+
 import DocumentInfo from './Pages/DocumentInquiry/DocumentInfo';
-import TestPage from './TestPage';
+import {store} from './redux/store';
 
+import { Provider } from 'react-redux';
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 root.render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-            <ThemeProvider
-                breakpoints={[
-                    'xxxl',
-                    'xxl',
-                    'xl',
-                    'lg',
-                    'md',
-                    'sm',
-                    'xs',
-                    'xxs',
-                ]}
-                minBreakpoint="xxs"
-            >
-                <BrowserRouter>
-                    <NavigationBar />
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/home" element={<HomePage />} />
-                        <Route path="/testpage" element={<TestPage />} />
-                        <Route path="/auth" element={<Auth />} />
-                        <Route
-                            path="/documentinquiry"
-                            element={<DocumentInquiry />}
-                        />
-                        <Route path="/admin" element={<Admin />} />
-                        <Route path="/team" element={<Team />} />
-                        <Route path="/information" element={<Information />} />
-                        <Route path="/project" element={<Project />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/update" element={<Update />} />
-                        {
-                            <Route
-                                path="/document/:id"
-                                element={<DocumentInfo />}
-                            />
-                        }
-                        <Route path="/users" element={<UsersMain />} />
-                    </Routes>
-                    <Footer />
-                </BrowserRouter>
-            </ThemeProvider>
-        </PersistGate>
+    <ThemeProvider
+        breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+        minBreakpoint="xxs"
+    >
+        <BrowserRouter>
+            <NavigationBar />
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/documentinquiry" element={<DocumentInquiry />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/information" element={<Information />} />
+                <Route path="/project" element={<Project />} />
+                <Route path="/profile" element={<Profile />} />
+               
+                <Route path="/document/:id" element={<DocumentInfo />} />
+                <Route path="/users" element={<UsersMain />} />
+            
+               
+            </Routes>
+          
+            <Footer S/>
+          
+        </BrowserRouter>
+    </ThemeProvider>
     </Provider>
 );
 

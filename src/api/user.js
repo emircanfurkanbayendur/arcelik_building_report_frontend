@@ -1,7 +1,7 @@
 import { Refresh } from '@mui/icons-material';
 import axios from 'axios';
 const refresh = () => window.location.reload(true)
-export const getUsers = ()  => {
+export const getUsers = async () => {
  
     var resultData;
     let config = {
@@ -10,79 +10,104 @@ export const getUsers = ()  => {
         },
     };
     const url = `${process.env.REACT_APP_BASE_URL}/api/User`;
-     axios.get(url,config).then(async (result) => {
+    await axios.get(url,config).then(async (result) => {
         
      
    
        
-        localStorage.setItem("users",JSON.stringify(result.data));
-     
-     
        
+     
+     
+       resultData = result.data;
+        
  
         
     });
-   
-    return  resultData;
+return resultData;
 };
-export const updateUserRole =  (id)  => {
+export const updateUserRole = async (id)  => {
     var resultData;
     let config = {
         headers: {
             Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
     };
+    console.log(id);
     const url = `${process.env.REACT_APP_BASE_URL}/api/User/changeRole/${id}`;
-     axios.put(url,id,config).then(async (result) => {
-        if(localStorage.getItem("users")!=null){
-          
-            getUsers();
-           refresh();
-           
-         }
-   
-        
+     await axios.put(url,id,config).then( (result) => {
+    return  result;
        
         
     });
-
-    return  resultData;
+    
 };
-
+export const getUserFromId = async (id) => {
+ 
+    var resultData;
+    let config = {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+    };
+    const url = `${process.env.REACT_APP_BASE_URL}/api/User/${id}`;
+    await axios.get(url,config).then(async (result) => {
+        
+     
+   
+       
+       
+     
+   
+       resultData = result.data;
+        
+ 
+        
+    });
+return resultData;
+};
 export const updateUser = async ({
     id,
     firstName,
     lastName,
     email,
-    password,
+   
     
 }) => {
-    const user = {
-        id,
-        firstName,
-        lastName,
-        email,
-        password,
-        createdAt: new Date().toJSON(),
-        isActive: true,
-        roleId: 1,
-        
-     
-    };
+    console.log(firstName);
+    const user = [
+        {
+         
+          "path": "/firstName",
+          "op": "replace",
+          "value": firstName
+        },
+      {
+         
+          "path": "/LastName",
+          "op": "replace",
+          "value": lastName
+        },
+        {
+         
+            "path": "/Email",
+            "op": "replace",
+            "value": email
+          }
+      ];
    
-const url = `${process.env.REACT_APP_BASE_URL}/api/User`;
-
-   await  axios.put(url, user,{ headers: {"Authorization" : ` Bearer ${localStorage.getItem("token")}`} }).then((result) => {
+const url = `${process.env.REACT_APP_BASE_URL}/api/User/${id}`;
+let config = {
+    headers: {
+        Authorization: 'Bearer ' +localStorage.getItem('token'),
+    },
+};
+   await  axios.patch(url,user,config).then((result) => {
     
         const dt = result.data;
-        localStorage.setItem(
-            'user',
-            JSON.stringify(dt)
-        );
-       
+      
         
-        refresh();
+      return dt;
     });
-   
+
 };
 export default  updateUser 
