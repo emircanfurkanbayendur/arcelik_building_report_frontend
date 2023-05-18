@@ -551,7 +551,7 @@ const deger2 = JSON.parse(deger)
                                             />
                                         </Row>
                                         <Row className="mt-3 px-2">
-                                            <Button
+                                        <Button
                                                 type="submit"
                                                 variant="secondary"
                                                 disabled={
@@ -563,8 +563,10 @@ const deger2 = JSON.parse(deger)
                                                     setIsPending(false);
                                                 }}*/
                                             >
-                                               Kaydet
-                                              
+                                                {!isPending && 'Kaydet'}
+                                                {isPending && (
+                                                    <Spinner animation="border" />
+                                                )}
                                             </Button>
                                         </Row>
                                     </Container>
