@@ -79,8 +79,7 @@ const CreateBuild = () => {
          } while (data.search("/")>0);
           
           GenerateQRCode(`http://localhost:3000/document/${data}`);
-          const deger = JSON.parse(localStorage.getItem("persist:root")).auth
-const deger2 = JSON.parse(deger)
+         
 
         const { createdByUserId, id } = await postBuilding({
             name: values.buildingName,
@@ -92,7 +91,7 @@ const deger2 = JSON.parse(deger)
             code: values.buildingCode,
             latitude: values.latitude,
             longitude: values.longitude,
-            createdByUserId:deger2.id ,
+            createdByUserId: JSON.parse(localStorage.getItem('user')).id ,
         });
 
         const document = await postDocument({
@@ -563,10 +562,7 @@ const deger2 = JSON.parse(deger)
                                                     setIsPending(false);
                                                 }}*/
                                             >
-                                                {!isPending && 'Kaydet'}
-                                                {isPending && (
-                                                    <Spinner animation="border" />
-                                                )}
+                                               Kaydet
                                             </Button>
                                         </Row>
                                     </Container>

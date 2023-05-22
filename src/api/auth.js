@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+
 const POST_USER_URL = `${process.env.REACT_APP_BASE_URL}/api/User`;
 const POST_LOGIN_AUTHENTICATE_URL = `${process.env.REACT_APP_BASE_URL}/api/User/authenticate`;
 const POST_VERIFY_URL = `${process.env.REACT_APP_BASE_URL}/api/User/verifyToken?token=`;
@@ -34,7 +36,9 @@ export const postAuthenticate = async ({ email, password }) => {
     await axios.post(POST_LOGIN_AUTHENTICATE_URL, user).then(async (result) => {
         resultData = await result.data;
     });
+    
 
+   
     return await resultData;
 };
 

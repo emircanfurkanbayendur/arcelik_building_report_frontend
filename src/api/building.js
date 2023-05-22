@@ -37,6 +37,7 @@ export const postBuilding = async ({
         headers: {
             Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
+       
     };
     await axios
         .post(BUILDING_ENDPOINT_URL, building, config)

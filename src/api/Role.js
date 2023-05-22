@@ -26,12 +26,12 @@ return resultData;
 };
 export const postRoleAuthority = async ( roleId,AuthorityId ) => {
     var resultData;
-  
+  var  authorityId = AuthorityId;
 
     const roleAuthority = {
         
         roleId,
-        AuthorityId,
+        authorityId,
         
         
     };
