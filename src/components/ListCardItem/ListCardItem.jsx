@@ -41,7 +41,7 @@ const ListCardItem = ({ building }) => {
 
     const handleDeleteDocument = async (id) => {
         setIsPending(true);
-        console.log('burdayım');
+       
         await deleteDocument(id);
         setBuildingInfo((prev) => ({
             ...prev,
@@ -61,7 +61,7 @@ const ListCardItem = ({ building }) => {
 		}, (err, data) => {
 			if (err) return console.error(err)
 
-			console.log(data)
+			
 			setQr(data)
 		})
 	}
@@ -88,7 +88,7 @@ const ListCardItem = ({ building }) => {
     };
 
     const handleUpdateBuilding = async () => {
-        console.log(buildingInfo)
+        
         await putBuilding(buildingInfo);
         setKontrol(buildingInfo.code);
     };
@@ -100,7 +100,7 @@ const ListCardItem = ({ building }) => {
            JSON.stringify(buildingInfo.code),
            secretPass
          ).toString();
-         console.log(data.search("/"));
+         
      } while (data.search("/")>0);
      const deger = `http://localhost:3000/document/${data}`
     return (
@@ -129,7 +129,7 @@ const ListCardItem = ({ building }) => {
                                                     name: event.target.value,
                                                 }));
 
-                                                console.log(buildingInfo);
+                                                
                                             }}
                                         />
                                     </Col>
@@ -176,9 +176,7 @@ const ListCardItem = ({ building }) => {
                                                                 })
                                                             );
 
-                                                            console.log(
-                                                                buildingInfo
-                                                            );
+                                                            
                                                         }}
                                                     />
                                                 </>
@@ -308,7 +306,7 @@ const ListCardItem = ({ building }) => {
                                                 address: event.target.value,
                                             }));
 
-                                            console.log(buildingInfo);
+                                           
                                         }}
                                     />
                                 </>

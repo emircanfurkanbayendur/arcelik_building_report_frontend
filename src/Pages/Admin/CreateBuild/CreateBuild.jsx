@@ -40,7 +40,7 @@ const initialValues = {
     longitude: '-',
 };
 
-const handleSelect = () => {};
+const handleSelect = () => { };
 
 const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -53,7 +53,7 @@ const getBase64 = (file) => {
 
 const CreateBuild = () => {
     const [url, setUrl] = useState('')
-	const [qr, setQr] = useState('')
+    const [qr, setQr] = useState('')
     const [showAlert, setShowAlert] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const [documentToUpload, setDocumentToUpload] = useState(null);
@@ -72,14 +72,14 @@ const CreateBuild = () => {
         var data;
         do {
             data = CryptoJS.AES.encrypt(
-               JSON.stringify(values.buildingCode),
-               secretPass
-             ).toString();
-             console.log(data.search("/"));
-         } while (data.search("/")>0);
-          
-          GenerateQRCode(`http://localhost:3000/document/${data}`);
-         
+                JSON.stringify(values.buildingCode),
+                secretPass
+            ).toString();
+           
+        } while (data.search("/") > 0);
+
+        GenerateQRCode(`http://localhost:3000/document/${data}`);
+
 
         const { createdByUserId, id } = await postBuilding({
             name: values.buildingName,
@@ -91,7 +91,7 @@ const CreateBuild = () => {
             code: values.buildingCode,
             latitude: values.latitude,
             longitude: values.longitude,
-            createdByUserId: JSON.parse(localStorage.getItem('user')).id ,
+            createdByUserId: JSON.parse(localStorage.getItem('user')).id,
         });
 
         const document = await postDocument({
@@ -126,28 +126,27 @@ const CreateBuild = () => {
     useEffect(() => {
         let buffer;
         let x = getBase64(documentToUpload).then((data) => {
-            console.log(data);
-            console.log(data.replace('data:application/pdf;base64,', ''));
+          
         });
-        
+
     }, [documentToUpload]);
     const GenerateQRCode = (data) => {
-      
-		QRCode.toDataURL(data, {
-			width: 200,
-			margin: 2,
-			color: {
-				dark: '#000000',
-				light: '#ffffff'
-			}
-		}, (err, data) => {
-			if (err) return console.error(err)
 
-			console.log(data)
-			setQr(data)
-		})
-	}
-       
+        QRCode.toDataURL(data, {
+            width: 200,
+            margin: 2,
+            color: {
+                dark: '#000000',
+                light: '#ffffff'
+            }
+        }, (err, data) => {
+            if (err) return console.error(err)
+
+            
+            setQr(data)
+        })
+    }
+
 
     return (
         <Container
@@ -335,9 +334,7 @@ const CreateBuild = () => {
                                                                     var selectedVillage =
                                                                         village;
                                                                     {
-                                                                        console.log(
-                                                                            selectedVillage
-                                                                        );
+                                                                       
                                                                     }
                                                                     return neighbourhoods.map(
                                                                         (
@@ -550,19 +547,20 @@ const CreateBuild = () => {
                                             />
                                         </Row>
                                         <Row className="mt-3 px-2">
-                                        <Button
+                                            <Button
                                                 type="submit"
                                                 variant="secondary"
                                                 disabled={
                                                     isPending ? true : false
                                                 }
-                                                /*onClick={async () => {
-                                                    setIsPending(true);
-                                                    handleFormSubmit(values);
-                                                    setIsPending(false);
-                                                }}*/
+                                            /*onClick={async () => {
+                                                setIsPending(true);
+                                                handleFormSubmit(values);
+                                                setIsPending(false);
+                                            }}*/
                                             >
-                                               Kaydet
+
+                                                {!isPending && 'Kaydet'}{isPending && (<Spinner animation="border" />)}
                                             </Button>
                                         </Row>
                                     </Container>
@@ -571,10 +569,10 @@ const CreateBuild = () => {
                         </Formik>
                     </Card.Body>
                     {qr && <>
-				<img src={qr} width="200" height="200" style={{marginLeft:"auto", marginRight:"auto"}}/>
-                <Button href={qr} variant="secondary" download="qrcode.png" style={{marginLeft:"auto", marginRight:"auto", textDecoration:"none", color:"#FFFFFF"}}>Download</Button>
-				
-			</>}
+                        <img src={qr} width="200" height="200" style={{ marginLeft: "auto", marginRight: "auto" }} />
+                        <Button href={qr} variant="secondary" download="qrcode.png" style={{ marginLeft: "auto", marginRight: "auto", textDecoration: "none", color: "#FFFFFF" }}>Download</Button>
+
+                    </>}
                 </Card>
             </Row>
         </Container>

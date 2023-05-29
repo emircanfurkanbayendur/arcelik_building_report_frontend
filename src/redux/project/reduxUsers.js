@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getUsers,updateUserRole } from '../../api/user'
-console.log("calıstı123123")
+
 const initialState = {
     items: [],
     getUsersIsPending: false,
@@ -9,7 +9,7 @@ const initialState = {
     updateRoleIsRejected:false
 }
 export const getUsersDatasAsync = createAsyncThunk('reduxExample/getUsersDatasAsync', async () => {
-    console.log("calıstı")
+    
    return await getUsers();
    
 })
