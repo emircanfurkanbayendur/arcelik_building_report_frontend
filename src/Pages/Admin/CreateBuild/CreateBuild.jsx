@@ -17,8 +17,10 @@ import {
     InputLabel,
     FormControl,
 } from '@mui/material';
+import ReactToPrint from 'react-to-print';
 import { Formik } from 'formik';
 import { formSchema } from './formSchema';
+import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import PopupModal from './PopupModal';
 import DragDrop from '../../../components/DragDrop/DragDrop';
 import { postBuilding } from '../../../api/building';
@@ -50,12 +52,19 @@ const getBase64 = (file) => {
         reader.onerror = (error) => reject(error);
     });
 };
+const pageStyle = `
+  @page {
+    margin: 300px 50px 10px 50px;
+  }
 
+
+`;
 const CreateBuild = () => {
     const [url, setUrl] = useState('')
     const [qr, setQr] = useState('')
     const [showAlert, setShowAlert] = useState(false);
     const [modalShow, setModalShow] = useState(false);
+    const [info, setInfo] = useState({ name: '', code: '',district:'',city:'',neighbourhood:'',street:'' });
     const [documentToUpload, setDocumentToUpload] = useState(null);
     const [selectBoxValues, setSelectBoxValues] = useState({
         city: '',
@@ -75,7 +84,7 @@ const CreateBuild = () => {
                 JSON.stringify(values.buildingCode),
                 secretPass
             ).toString();
-           
+
         } while (data.search("/") > 0);
 
         GenerateQRCode(`http://localhost:3000/document/${data}`);
@@ -93,7 +102,14 @@ const CreateBuild = () => {
             longitude: values.longitude,
             createdByUserId: JSON.parse(localStorage.getItem('user')).id,
         });
-
+        setInfo({
+            name: values.buildingName,
+            code: values.buildingCode,
+            district: values.countyName,
+            city: values.cityName,
+            neighbourhood: values.neighbourhoodName,
+            street: values.streetName
+        })
         const document = await postDocument({
             report: await getBase64(documentToUpload).then((data) =>
                 data.replace('data:application/pdf;base64,', '')
@@ -122,11 +138,11 @@ const CreateBuild = () => {
             setFieldValue('longitude', String(position.coords.longitude));
         });
     };
-
+    const componentRef = React.useRef(null);
     useEffect(() => {
         let buffer;
         let x = getBase64(documentToUpload).then((data) => {
-          
+
         });
 
     }, [documentToUpload]);
@@ -142,7 +158,7 @@ const CreateBuild = () => {
         }, (err, data) => {
             if (err) return console.error(err)
 
-            
+
             setQr(data)
         })
     }
@@ -334,7 +350,7 @@ const CreateBuild = () => {
                                                                     var selectedVillage =
                                                                         village;
                                                                     {
-                                                                       
+
                                                                     }
                                                                     return neighbourhoods.map(
                                                                         (
@@ -568,11 +584,56 @@ const CreateBuild = () => {
                             )}
                         </Formik>
                     </Card.Body>
-                    {qr && <>
-                        <img src={qr} width="200" height="200" style={{ marginLeft: "auto", marginRight: "auto" }} />
-                        <Button href={qr} variant="secondary" download="qrcode.png" style={{ marginLeft: "auto", marginRight: "auto", textDecoration: "none", color: "#FFFFFF" }}>Download</Button>
 
-                    </>}
+
+                    <div style={{ marginLeft: "auto", marginRight: "auto" }} ref={componentRef}  >
+
+                        {qr && <>
+                            <MDBTable >
+                                <MDBTableHead>
+                                    <tr>
+                                        <th scope='col'>Yapı Kodu</th>
+                                        <th scope='col'>Yapı Adı</th>
+                                        <th scope='col'>Yapı Adresi</th>
+                                        
+                                    </tr>
+                                </MDBTableHead>
+                                <MDBTableBody>
+                                    <tr>
+        
+                                        <td>{info.code}</td>
+                                        <td>{info.name} Apartmanı</td>
+                                        <td>{info.neighbourhood} Mah. {info.street} Sk. {info.city}/{info.district}</td>
+                                        
+                                    </tr>
+                                    
+                                </MDBTableBody>
+                            </MDBTable>
+                            
+                            <br />
+                            <img src={qr} width="200" height="200" style={{ marginLeft: "220px", marginRight: "auto" }} />
+
+                        </>}
+                    </div>
+                            <br />
+                    <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+                        {qr && <>
+                            
+                            <Button href={qr} variant="secondary" download="qrcode.png" style={{ marginLeft: "auto", marginRight: "auto", textDecoration: "none", color: "#FFFFFF" }}>Download</Button>
+                           
+                            <ReactToPrint
+                            
+                                trigger={() => {
+                                    return <button className="btn btn-secondary">Print Qr</button>
+                                }}
+                                content={() => componentRef.current }
+                                documentTitle="QR Code"
+                                pageStyle={pageStyle}
+                               
+
+                            />
+                        </>}
+                    </div>
                 </Card>
             </Row>
         </Container>
