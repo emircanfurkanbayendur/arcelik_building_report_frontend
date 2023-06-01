@@ -7,7 +7,7 @@ import { putBuilding } from '../../api/building';
 import DragDrop from '../DragDrop/DragDrop';
 import CryptoJS from "crypto-js";
 import { useEffect } from 'react';
-
+import ReactToPrint from 'react-to-print';
 const addressToString = (
     neighbourhood,
     street,
@@ -19,7 +19,13 @@ const addressToString = (
 };
 
 const fileTypes = ['PDF'];
+const pageStyle = `
+  @page {
+    margin: 300px 50px 300px 50px;
+  }
 
+
+`;
 const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -65,7 +71,7 @@ const ListCardItem = ({ building }) => {
             setQr(data)
         })
     }
-
+    const componentRef = React.useRef(null);
     useEffect(() => {
         GenerateQRCode(`http://localhost:3000/document/${data}`);
 
@@ -104,7 +110,7 @@ const ListCardItem = ({ building }) => {
     } while (data.search("/") > 0);
     const deger = `http://localhost:3000/document/${data}`
     return (
-        <Accordion defaultActiveKey="0">
+        <Accordion defaultActiveKey="0" >
             <Accordion.Item
                 className="mb-2"
                 eventKey={buildingInfo.id}
@@ -115,10 +121,11 @@ const ListCardItem = ({ building }) => {
                 </Accordion.Header>
                 <Accordion.Body>
 
-                    <Card className="mb-3">
-                        <Card.Body>
-                            <Row className="align-items-center">
-                                <Col sm={10}>
+                    <Card className="mb-3" >
+                        <Card.Body >
+                            <Row className="align-items-center" ref={componentRef}>
+                            
+                                <Col sm={10} >
                                     <Card.Title>
                                         <h1>
 
@@ -146,14 +153,15 @@ const ListCardItem = ({ building }) => {
                                             )}
                                         </h1>
                                     </Card.Title>
-
-                                    <Card.Subtitle className="mb-1 text-muted">
+                                    
+                                    <Card.Subtitle className="mb-1 text-muted" >
                                         <Row>
                                             <Col sm={12}>
                                                 Güncellenme Tarihi:{' '}
                                                 {buildingInfo.documents[0]?.uploadedAt}
                                             </Col>
                                         </Row>
+                                       
                                         <Row className="mt-2">
                                             {!isInEditMode ? (
                                                 <Col sm={12}>
@@ -269,19 +277,19 @@ const ListCardItem = ({ building }) => {
                                 </Col>
                                 <Row className="my-2 d-sm-block d-lg-none"></Row>
 
-                                <Col sm={2} className="d-flex justify-content-center">
+                                <Col sm={4} className="d-flex justify-content-center"  style = {{ marginLeft: "auto", marginRight: "auto" }}>
 
-                                    <img src={qr} width="200" height="200" style={{ marginLeft: "auto", marginRight: "auto" }} />
+                                    <img src={qr} width="150" height="150"   style={{ marginLeft: "auto", marginRight: "auto" , display:"flex"}}/>
 
 
 
                                 </Col>
-
+                                
                                 <Row className="my-2 d-sm-block d-lg-none"></Row>
 
-                                <Col sm={1}></Col>
-                            </Row>
-                            <Row>
+                               
+                                
+                                
                                 <Col sm={10} className="pt-2">
                                     <Card.Subtitle className="mt-2 text-muted">
                                         Adres Bilgisi:
@@ -324,31 +332,66 @@ const ListCardItem = ({ building }) => {
                                     </Card.Text>
                                 </Col>
 
-                                <Col sm={2} className="pt-2">
-                                    <Row className="mb-1">
-                                        <Button variant="danger" size="sm">
-                                            Kaydı sil
-                                        </Button>
-                                    </Row>
-                                    <Row className="mb-1">
-                                        <Button href={qr} variant="secondary" download="qrcode.png" style={{ marginLeft: "auto", marginRight: "auto", textDecoration: "none", color: "#FFFFFF" }}>Qr İndir</Button>
-                                    </Row>
-                                    <Row>
-                                        <Button
-                                            variant="secondary"
-                                            size="sm"
-                                            onClick={() => {
-                                                setIsInEditMode((prev) => !prev);
-                                                handleUpdateBuilding(buildingInfo.id);
-                                            }}
-                                        >
-                                            {!isInEditMode ? 'Kaydı düzenle' : 'Kaydet'}
-                                        </Button>
-                                    </Row>
-
-
-                                </Col>
+                                
                             </Row>
+<Row>
+                            <Col
+                                sm={12}
+                                md={12}
+                                lg={3}
+                                className="d-grid"
+                            >
+
+                                <Button variant="danger" size="sm">
+                                    Kaydı sil
+                                </Button>
+                            </Col>
+                            <Col
+                                sm={12}
+                                md={12}
+                                lg={3}
+                                className="d-grid"
+                            >
+                                <Button href={qr}  size="sm" variant="secondary" download="qrcode.png" >Qr İndir</Button>
+                            </Col>
+                            <Col
+                                sm={12}
+                                md={12}
+                                lg={3}
+                                className="d-grid"
+                            >
+                                <Button
+                                    variant="secondary"
+                                    size="sm"
+                                    onClick={() => {
+                                        setIsInEditMode((prev) => !prev);
+                                        handleUpdateBuilding(buildingInfo.id);
+                                    }}
+                                >
+                                    {!isInEditMode ? 'Kaydı düzenle' : 'Kaydet'}
+                                </Button>
+                               
+                            </Col>
+                            <Col
+                                sm={12}
+                                md={12}
+                                lg={3}
+                                className="d-grid"
+                            >
+                                <ReactToPrint
+                            
+                            trigger={() => {
+                                return <button className="btn btn-secondary">Print Qr</button>
+                            }}
+                            content={() => componentRef.current }
+                            documentTitle="QR Code"
+                            pageStyle={pageStyle}
+                           
+
+                        />
+                            </Col>
+                            </Row>
+
                             {isInEditMode && (
                                 <>
                                     <Row className="mt-3">
