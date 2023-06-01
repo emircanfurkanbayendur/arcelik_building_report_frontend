@@ -585,10 +585,9 @@ const CreateBuild = () => {
                         </Formik>
                     </Card.Body>
 
-
+<Container>
                     <div style={{ marginLeft: "auto", marginRight: "auto" }} ref={componentRef}  >
-
-                        {qr && <>
+                    {qr && <>
                             <MDBTable >
                                 <MDBTableHead>
                                     <tr>
@@ -610,11 +609,19 @@ const CreateBuild = () => {
                                 </MDBTableBody>
                             </MDBTable>
                             
-                            <br />
-                            <img src={qr} width="200" height="200" style={{ marginLeft: "220px", marginRight: "auto" }} />
+                            
+
+                        </>}
+
+                        {qr && <>
+                            
+                            
+                         
+                            <img src={qr} width="200" height="200" style={{ marginLeft: "auto", marginRight: "auto" , display:"flex"}} />
 
                         </>}
                     </div>
+                    </Container>
                             <br />
                     <div style={{ marginLeft: "auto", marginRight: "auto" }}>
                         {qr && <>
